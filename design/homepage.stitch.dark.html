@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ClauseShield AI - Contract &amp; Invoice Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: "#3B82F6", // Electric Blue
+                            hover: "#2563EB",
+                            light: "#60A5FA"
+                        },
+                        cyan: {
+                            DEFAULT: "#22D3EE", // Soft Cyan
+                            500: "#06B6D4",
+                            400: "#22D3EE", 
+                        },
+                        navy: {
+                            900: "#0B0F17", // Near-black navy background
+                            800: "#151E32", // Dark slate card background
+                            700: "#1E293B", // Low-contrast slate border
+                        },
+                        slate: {
+                            100: "#F1F5F9", // Soft white
+                            200: "#E2E8F0",
+                            300: "#CBD5E1",
+                            400: "#94A3B8", // Cool gray
+                            500: "#64748B",
+                            600: "#475569",
+                            700: "#334155",
+                            800: "#1E293B",
+                            900: "#0F172A",
+                        },
+                        "background-light": "#f6f6f8",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-navy-900 text-slate-900 dark:text-slate-100 font-display overflow-x-hidden antialiased selection:bg-primary selection:text-white">
+<div class="relative flex min-h-screen w-full flex-col group/design-root">
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-navy-700 bg-background-light/80 dark:bg-navy-900/80 backdrop-blur-md">
+<div class="layout-container flex justify-center">
+<div class="flex w-full max-w-[1280px] items-center justify-between px-4 py-4 md:px-10">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center size-8 rounded-lg bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-2xl">shield_lock</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">ClauseShield AI</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Product</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Solutions</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Pricing</a>
+<a class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Resources</a>
+</nav>
+<div class="flex gap-3">
+<button class="hidden md:flex h-10 items-center justify-center rounded-lg px-4 bg-transparent border border-slate-200 dark:border-navy-700 hover:bg-slate-100 dark:hover:bg-navy-800 text-slate-900 dark:text-slate-100 text-sm font-bold transition-colors">
+                        Log In
+                    </button>
+<button class="flex h-10 items-center justify-center rounded-lg px-4 bg-primary hover:bg-primary-hover text-white text-sm font-bold shadow-lg shadow-primary/20 transition-all">
+                        Get Started
+                    </button>
+</div>
+</div>
+</div>
+</header>
+<section class="relative w-full overflow-hidden pt-12 pb-20 md:pt-20 md:pb-32">
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[1400px] pointer-events-none opacity-40 dark:opacity-30">
+<div class="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-3xl mix-blend-screen"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-cyan/20 rounded-full blur-3xl mix-blend-screen"></div>
+</div>
+<div class="layout-container flex flex-col items-center px-4 md:px-10">
+<div class="flex flex-col gap-8 max-w-[1080px] w-full @container">
+<div class="flex flex-col gap-8 lg:flex-row lg:items-center">
+<div class="flex flex-col gap-6 lg:w-1/2 text-center lg:text-left items-center lg:items-start z-10">
+<div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary uppercase tracking-wider border border-primary/20">
+<span class="material-symbols-outlined text-sm">new_releases</span> v2.0 Released
+                        </div>
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-slate-100">
+                            AI That Brings Clarity to <span class="text-primary">Contracts</span> and <span class="text-primary">Cash</span>
+</h1>
+<h2 class="text-lg text-slate-600 dark:text-slate-400 font-normal leading-relaxed max-w-xl">
+                            Unify your legal and financial workflows. Detect risks in seconds and automate invoice processing with enterprise-grade precision.
+                        </h2>
+<div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
+<button class="flex h-12 min-w-[140px] items-center justify-center rounded-xl bg-primary px-6 text-white text-base font-bold shadow-lg shadow-primary/30 hover:bg-primary-hover hover:scale-[1.02] transition-all">
+                                Start Free Trial
+                            </button>
+<button class="flex h-12 min-w-[140px] items-center justify-center rounded-xl bg-white dark:bg-navy-800 border border-slate-200 dark:border-navy-700 px-6 text-slate-900 dark:text-slate-100 text-base font-bold hover:bg-slate-50 dark:hover:bg-navy-700 transition-all gap-2">
+<span class="material-symbols-outlined">play_circle</span> Book Demo
+                            </button>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                            No credit card required · SOC2 Compliant
+                        </p>
+</div>
+<div class="w-full lg:w-1/2 mt-8 lg:mt-0 perspective-1000 z-10">
+<div class="relative rounded-2xl border border-slate-200 dark:border-navy-700 bg-white dark:bg-navy-800 shadow-2xl overflow-hidden aspect-[4/3] group hover:rotate-1 hover:scale-[1.01] transition-transform duration-500 ease-out" data-alt="Dashboard interface showing contract risk analysis graphs and invoice matching tables">
+<div class="h-8 bg-slate-100 dark:bg-navy-900 border-b border-slate-200 dark:border-navy-700 flex items-center px-4 gap-2">
+<div class="size-2.5 rounded-full bg-red-400"></div>
+<div class="size-2.5 rounded-full bg-yellow-400"></div>
+<div class="size-2.5 rounded-full bg-green-400"></div>
+</div>
+<div class="p-6 h-full bg-slate-50 dark:bg-navy-800/50 bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&amp;w=2070&amp;auto=format&amp;fit=crop')] bg-cover bg-top opacity-90 hover:opacity-100 transition-opacity" data-alt="Analytics dashboard showing graphs and data tables"></div>
+<div class="absolute top-20 right-6 bg-white dark:bg-navy-800 p-3 rounded-lg shadow-lg border border-slate-100 dark:border-navy-700 flex gap-3 items-center animate-bounce duration-[3000ms]">
+<div class="p-2 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</div>
+<div>
+<div class="text-xs font-semibold text-slate-500 dark:text-slate-400">Compliance</div>
+<div class="text-sm font-bold text-slate-900 dark:text-slate-100">100% Verified</div>
+</div>
+</div>
+<div class="absolute bottom-12 left-6 bg-white dark:bg-navy-800 p-3 rounded-lg shadow-lg border border-slate-100 dark:border-navy-700 flex gap-3 items-center">
+<div class="p-2 rounded-full bg-blue-100 dark:bg-primary/20 text-primary">
+<span class="material-symbols-outlined text-lg">smart_toy</span>
+</div>
+<div>
+<div class="text-xs font-semibold text-slate-500 dark:text-slate-400">AI Analysis</div>
+<div class="text-sm font-bold text-slate-900 dark:text-slate-100">Processing...</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-10 border-y border-slate-200 dark:border-navy-700 bg-white dark:bg-navy-900/50">
+<div class="layout-container px-4 md:px-10 max-w-[1080px] mx-auto text-center">
+<p class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-8">Trusted by forward-thinking teams</p>
+<div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+<div class="flex items-center gap-2 text-xl font-bold text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined">diamond</span> AcmeCorp
+                </div>
+<div class="flex items-center gap-2 text-xl font-bold text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined">rocket_launch</span> Stratos
+                </div>
+<div class="flex items-center gap-2 text-xl font-bold text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined">anchor</span> HarborLogistics
+                </div>
+<div class="flex items-center gap-2 text-xl font-bold text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined">landscape</span> SummitFinancial
+                </div>
+<div class="flex items-center gap-2 text-xl font-bold text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined">bolt</span> Voltas
+                </div>
+</div>
+</div>
+</section>
+<section class="py-20 px-4 md:px-10">
+<div class="layout-container max-w-[1080px] mx-auto flex flex-col gap-10">
+<div class="text-center max-w-2xl mx-auto">
+<h2 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">Tailored for your role</h2>
+<p class="text-slate-600 dark:text-slate-400 text-lg">
+                    Whether you are managing risk, cash flow, or the entire organization, ClauseShield gives you the specific insights you need.
+                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="group flex flex-col bg-white dark:bg-navy-800 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-200 dark:border-navy-700 overflow-hidden">
+<div class="h-48 w-full bg-cover bg-center" data-alt="Executive team member leading a meeting in a glass office" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA08PkyNben493HpWkUrXQTZ7MT_jbUDLJkXipogelZ8TbrWeXRr-OicpLzg_fd0GvnUGUKyOZExAd0-xauqdgR__nB2nOOBh9PJ0A7KSjmGpzWEwgGkQNk87IaWxdDwLDnYWFzpvBpGJreYSqNH_ZFcMNyNH0W3i64PRJj9Vw4j1w23U2HsrtkDzlbeU_nm2OvyUYv0XCx3ORv_O6-7lotuyRpPA6h3OorzkHJp-0hK-HorkiWy79gxvEA5Q8jjtFbCFqizWW8lg');">
+<div class="w-full h-full bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+<span class="material-symbols-outlined text-white text-4xl bg-white/20 p-2 rounded-lg backdrop-blur-sm border border-white/10">verified_user</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">Founders &amp; Executives</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                                Accelerate decision velocity with high-level insights. See the big picture of your liabilities and assets instantly.
+                            </p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-navy-700">
+<button class="flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-3 transition-all">
+                                Explore Executive Suite <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-navy-800 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-200 dark:border-navy-700 overflow-hidden">
+<div class="h-48 w-full bg-cover bg-center" data-alt="Legal counsel reviewing documents with a pen" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_WssGYMLkt_655XhO7uNyJJbPfvEGdnlvm7SN8X1tSy7vEkSQL1k1ma-mGkWK1XYtBx4qb8mmoV1eiZm_87oezkQ9CZU6_n3rdvwytXNISR2FlwsDRl4rA20wK28VLdsI1rmouygFayD91Q_b0QQepVNoRa7W727aLVeobeWACGx6eqJCFxEoU40LyMaE_Ll1GG9lglPMBc_Q8xV5yxbBXqPPjpI1X_bneJtLkrFq6QKLEu5B15uWLHKi46ydGd8qCdvLG2nOdg');">
+<div class="w-full h-full bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+<span class="material-symbols-outlined text-white text-4xl bg-white/20 p-2 rounded-lg backdrop-blur-sm border border-white/10">gavel</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">Legal &amp; General Counsel</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                                Automate compliance checks and risk review. Reduce contract turnaround time by 80% without missing a clause.
+                            </p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-navy-700">
+<button class="flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-3 transition-all">
+                                Explore Legal Tools <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group flex flex-col bg-white dark:bg-navy-800 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-200 dark:border-navy-700 overflow-hidden">
+<div class="h-48 w-full bg-cover bg-center" data-alt="Finance professional analyzing charts on multiple monitors" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDuDN6LDpjsrw9v5FKUmZAekfbEqlVlj5XmYPxSnp5rI4S2WVP5YmAeBeS6knYpCaa7bE8vomiUvrL5Zfho-M9wyFuxkbqVkpf8KCQhM44AXYMvYdwdyT_Zgtbykp57_JU7wopsmrvhikcrK9c3P7AlamK0i-DcecpyGp1imFg9o-RuUvDVRHX_vl6QrhU8UU21Li-nbvdcImAMGVj8I1vvIOrLwmlJ6Ty7InofwW4SU6bpg_jhY7QtME_FJWbq9vxSm_fae44g9w');">
+<div class="w-full h-full bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+<span class="material-symbols-outlined text-white text-4xl bg-white/20 p-2 rounded-lg backdrop-blur-sm border border-white/10">attach_money</span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-1 gap-4">
+<div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-slate-100 mb-2">Finance &amp; CFOs</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                                Streamline AP and optimize cash flow. Automatically match invoices to contracts and prevent overpayment.
+                            </p>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-100 dark:border-navy-700">
+<button class="flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-3 transition-all">
+                                Explore Finance Solutions <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 bg-white dark:bg-navy-900 border-y border-slate-200 dark:border-navy-700">
+<div class="layout-container max-w-[1080px] mx-auto px-4 md:px-10">
+<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+<div class="lg:w-1/2 flex flex-col gap-6">
+<div class="size-12 rounded-xl bg-cyan-100 dark:bg-cyan/10 text-cyan-600 dark:text-cyan border border-cyan/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">policy</span>
+</div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Instant Risk Detection</h2>
+<p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Stop manually reviewing 50-page documents. Our AI scans for non-standard clauses, missing indemnities, and unfavorable terms in seconds, highlighting exactly what needs your attention.
+                    </p>
+<ul class="flex flex-col gap-3 mt-2">
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span>Customizable risk playbooks</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span>Historical precedent analysis</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span>One-click redlining suggestions</span>
+</li>
+</ul>
+</div>
+<div class="lg:w-1/2 w-full">
+<div class="rounded-2xl bg-slate-100 dark:bg-navy-800 p-2 shadow-inner border border-slate-200 dark:border-navy-700">
+<div class="w-full aspect-square md:aspect-video rounded-xl bg-cover bg-center shadow-lg" data-alt="Close up of digital document with red highlighted text indicating risk" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABux0TNcvgSfvb4xPRtr826EhJXffPH853TLm02ru6pV_dLeG1BCF38CRPpdpkZ4Wu5raIunLCx3GtyXRKDO0l_S58KT_HUSyOpaYA7U-KHVMZXql8koj-FBucpAV6h9NYp9so7MX2TLOjKZ6jbO-yLOS6TDxB-1J3XAyInIa9f3KiLlDNqKziDZnxWXHYJJyXhV_phDupQFNO_gyyKA2kyzjvLxPD5o26Y7nhl3qoXuT_HSiV-Iqj34jsBT-IzRxPcKepxMfmoQ');"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 px-4 md:px-10">
+<div class="layout-container max-w-[1080px] mx-auto">
+<div class="flex flex-col lg:flex-row-reverse items-center gap-12 lg:gap-20">
+<div class="lg:w-1/2 flex flex-col gap-6">
+<div class="size-12 rounded-xl bg-blue-100 dark:bg-primary/10 text-primary border border-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">receipt_long</span>
+</div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Automate Invoice Processing</h2>
+<p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                        Ensure every dollar leaving your company is compliant. We match invoices against contract terms automatically to prevent overbilling and duplicate payments.
+                    </p>
+<ul class="flex flex-col gap-3 mt-2">
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span>3-way matching automation</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span>Line-item level extraction</span>
+</li>
+<li class="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<span>ERP integration (SAP, Oracle, NetSuite)</span>
+</li>
+</ul>
+</div>
+<div class="lg:w-1/2 w-full">
+<div class="rounded-2xl bg-slate-100 dark:bg-navy-800 p-2 shadow-inner border border-slate-200 dark:border-navy-700">
+<div class="w-full aspect-square md:aspect-video rounded-xl bg-cover bg-center shadow-lg" data-alt="Data visualization of financial growth and invoice processing statistics" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCBUbv8t2qKM4qIsREvA7SBHjAAVAt-tyWyJiKvqkIt-Ce2bgVo-_gFDuLgWdQ93kE6r4_SVdTtmQ2ZX37zspTSHGxbZdVMZnCfc--dnzaHIqBBAUJz-wi2c3Vjitx8AE0pcHueuNrKrcCMXb0FxFXLyMOTW4pgyhBkiZ9v-8gmv5KKox3uEuLmZQL6iMqLrGBmXy4WGAOpEV8mVK5fTVZ-jE4plbM84r0RGyVQOdbgLH9nbEq6s9Y9MV04NU2wox5C7oizvZjSRQ');"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-20 px-4 md:px-10">
+<div class="layout-container max-w-[1080px] mx-auto">
+<div class="relative rounded-3xl bg-primary px-6 py-16 text-center md:px-12 overflow-hidden shadow-2xl shadow-primary/20">
+<div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white to-transparent mix-blend-overlay"></div>
+<div class="relative z-10 flex flex-col items-center gap-6">
+<h2 class="text-3xl md:text-5xl font-black text-white tracking-tight">Ready to clarify your contracts?</h2>
+<p class="text-blue-100 text-lg md:text-xl max-w-2xl">
+                        Join over 500+ enterprise teams using ClauseShield to secure their legal and financial operations.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4 w-full justify-center">
+<button class="h-12 px-8 rounded-xl bg-white text-primary font-bold text-lg hover:bg-slate-50 transition-colors shadow-xl">
+                            Get Started Free
+                        </button>
+<button class="h-12 px-8 rounded-xl bg-blue-700 border border-blue-500 text-white font-bold text-lg hover:bg-blue-600 transition-colors">
+                            Talk to Sales
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer class="border-t border-slate-200 dark:border-navy-700 bg-background-light dark:bg-navy-900 pt-16 pb-8">
+<div class="layout-container max-w-[1080px] mx-auto px-4 md:px-10">
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
+<div class="col-span-2 lg:col-span-2 flex flex-col gap-4">
+<div class="flex items-center gap-2 text-slate-900 dark:text-slate-100 font-bold text-xl">
+<span class="material-symbols-outlined text-primary">shield_lock</span>
+                        ClauseShield AI
+                    </div>
+<p class="text-slate-500 dark:text-slate-400 text-sm max-w-xs">
+                        The enterprise standard for AI-powered contract analysis and financial reconciliation.
+                    </p>
+<div class="flex gap-4 mt-2">
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">mail</span></a>
+<a class="text-slate-400 hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Product</h4>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Features</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Integrations</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Pricing</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Changelog</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Resources</h4>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">API Reference</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Community</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Blog</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-bold text-slate-900 dark:text-slate-100">Company</h4>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">About</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Careers</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Legal</a>
+<a class="text-sm text-slate-500 dark:text-slate-400 hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+</div>
+<div class="pt-8 border-t border-slate-200 dark:border-navy-700 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-500 dark:text-slate-400">© 2024 ClauseShield AI. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">Terms of Service</a>
+<a class="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">Cookie Settings</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>

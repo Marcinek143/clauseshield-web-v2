@@ -2,6 +2,7 @@ import PersonaCard from "./PersonaCard";
 
 const personas = [
   {
+    href: "/for-founders",
     imageClassName:
       "bg-[url('https://lh3.googleusercontent.com/aida-public/AB6AXuA08PkyNben493HpWkUrXQTZ7MT_jbUDLJkXipogelZ8TbrWeXRr-OicpLzg_fd0GvnUGUKyOZExAd0-xauqdgR__nB2nOOBh9PJ0A7KSjmGpzWEwgGkQNk87IaWxdDwLDnYWFzpvBpGJreYSqNH_ZFcMNyNH0W3i64PRJj9Vw4j1w23U2HsrtkDzlbeU_nm2OvyUYv0XCx3ORv_O6-7lotuyRpPA6h3OorzkHJp-0hK-HorkiWy79gxvEA5Q8jjtFbCFqizWW8lg')]",
     imageAlt: "Executive team member leading a meeting in a glass office",
@@ -12,6 +13,7 @@ const personas = [
     cta: "Explore Executive Suite",
   },
   {
+    href: "/for-legal",
     imageClassName:
       "bg-[url('https://lh3.googleusercontent.com/aida-public/AB6AXuC_WssGYMLkt_655XhO7uNyJJbPfvEGdnlvm7SN8X1tSy7vEkSQL1k1ma-mGkWK1XYtBx4qb8mmoV1eiZm_87oezkQ9CZU6_n3rdvwytXNISR2FlwsDRl4rA20wK28VLdsI1rmouygFayD91Q_b0QQepVNoRa7W727aLVeobeWACGx6eqJCFxEoU40LyMaE_Ll1GG9lglPMBc_Q8xV5yxbBXqPPjpI1X_bneJtLkrFq6QKLEu5B15uWLHKi46ydGd8qCdvLG2nOdg')]",
     imageAlt: "Legal counsel reviewing documents with a pen",
@@ -22,6 +24,7 @@ const personas = [
     cta: "Explore Legal Tools",
   },
   {
+    href: "/for-finance",
     imageClassName:
       "bg-[url('https://lh3.googleusercontent.com/aida-public/AB6AXuDuDN6LDpjsrw9v5FKUmZAekfbEqlVlj5XmYPxSnp5rI4S2WVP5YmAeBeS6knYpCaa7bE8vomiUvrL5Zfho-M9wyFuxkbqVkpf8KCQhM44AXYMvYdwdyT_Zgtbykp57_JU7wopsmrvhikcrK9c3P7AlamK0i-DcecpyGp1imFg9o-RuUvDVRHX_vl6QrhU8UU21Li-nbvdcImAMGVj8I1vvIOrLwmlJ6Ty7InofwW4SU6bpg_jhY7QtME_FJWbq9vxSm_fae44g9w')]",
     imageAlt: "Finance professional analyzing charts on multiple monitors",

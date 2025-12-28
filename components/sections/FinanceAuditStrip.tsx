@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function FinanceAuditStrip() {
   return (
     <>
@@ -211,12 +213,18 @@ export default function FinanceAuditStrip() {
               automating compliance with ClauseShield AI.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
-              <button className="bg-white text-primary px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition-colors shadow-lg">
+              <Link
+                href="/request-demo?persona=finance"
+                className="bg-white text-primary px-8 py-4 rounded-xl font-bold hover:bg-blue-50 transition-colors shadow-lg inline-flex items-center justify-center"
+              >
                 Get a Personalized Demo
-              </button>
-              <button className="bg-blue-700 text-white border border-blue-500 px-8 py-4 rounded-xl font-bold hover:bg-blue-600 transition-colors">
+              </Link>
+              <Link
+                href="/for-legal"
+                className="bg-blue-700 text-white border border-blue-500 px-8 py-4 rounded-xl font-bold hover:bg-blue-600 transition-colors inline-flex items-center justify-center"
+              >
                 Calculate Savings
-              </button>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CallToAction() {
   return (
     <section className="py-20 px-4 md:px-10">
@@ -13,12 +15,18 @@ export default function CallToAction() {
               legal and financial operations.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full justify-center">
-              <button className="h-12 px-8 rounded-xl bg-white text-primary font-bold text-lg hover:bg-slate-50 transition-colors shadow-xl">
+              <Link
+                href="/request-demo"
+                className="h-12 px-8 rounded-xl bg-white text-primary font-bold text-lg hover:bg-slate-50 transition-colors shadow-xl inline-flex items-center justify-center"
+              >
                 Get Started Free
-              </button>
-              <button className="h-12 px-8 rounded-xl bg-blue-700 border border-blue-500 text-white font-bold text-lg hover:bg-blue-600 transition-colors">
+              </Link>
+              <Link
+                href="/for-founders"
+                className="h-12 px-8 rounded-xl bg-blue-700 border border-blue-500 text-white font-bold text-lg hover:bg-blue-600 transition-colors inline-flex items-center justify-center"
+              >
                 Talk to Sales
-              </button>
+              </Link>
             </div>
           </div>
         </div>

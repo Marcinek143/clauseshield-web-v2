@@ -1,4 +1,7 @@
+import Link from "next/link";
+
 type PersonaCardProps = {
+  href: string;
   imageClassName: string;
   imageAlt: string;
   icon: string;
@@ -8,6 +11,7 @@ type PersonaCardProps = {
 };
 
 export default function PersonaCard({
+  href,
   imageClassName,
   imageAlt,
   icon,
@@ -16,7 +20,10 @@ export default function PersonaCard({
   cta,
 }: PersonaCardProps) {
   return (
-    <div className="group flex flex-col bg-white dark:bg-navy-800 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-200 dark:border-navy-700 overflow-hidden">
+    <Link
+      href={href}
+      className="group flex flex-col bg-white dark:bg-navy-800 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-200 dark:border-navy-700 overflow-hidden"
+    >
       <div
         className={`h-48 w-full bg-cover bg-center ${imageClassName}`}
         data-alt={imageAlt}
@@ -37,14 +44,14 @@ export default function PersonaCard({
           </p>
         </div>
         <div className="mt-auto pt-4 border-t border-slate-100 dark:border-navy-700">
-          <button className="flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-3 transition-all">
+          <span className="flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-3 transition-all">
             {cta}{" "}
             <span className="material-symbols-outlined text-lg">
               arrow_forward
             </span>
-          </button>
+          </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

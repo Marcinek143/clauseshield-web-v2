@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function LegalDefensibilityStrip() {
   return (
     <>
@@ -350,12 +352,18 @@ export default function LegalDefensibilityStrip() {
             and accelerate business velocity.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <button className="h-14 px-8 rounded-xl bg-primary text-white text-lg font-bold hover:bg-primary-hover transition-colors shadow-xl shadow-primary/20 w-full sm:w-auto dark:shadow-primary/30">
+            <Link
+              href="/request-demo?persona=legal"
+              className="h-14 px-8 rounded-xl bg-primary text-white text-lg font-bold hover:bg-primary-hover transition-colors shadow-xl shadow-primary/20 w-full sm:w-auto dark:shadow-primary/30 inline-flex items-center justify-center"
+            >
               Get a Custom Demo
-            </button>
-            <button className="h-14 px-8 rounded-xl bg-background-light border border-slate-200 text-slate-900 text-lg font-bold hover:bg-gray-100 transition-colors w-full sm:w-auto dark:bg-navy-800 dark:border-navy-700 dark:text-slate-100 dark:hover:bg-navy-700">
+            </Link>
+            <Link
+              href="/for-finance"
+              className="h-14 px-8 rounded-xl bg-background-light border border-slate-200 text-slate-900 text-lg font-bold hover:bg-gray-100 transition-colors w-full sm:w-auto dark:bg-navy-800 dark:border-navy-700 dark:text-slate-100 dark:hover:bg-navy-700 inline-flex items-center justify-center"
+            >
               View Pricing
-            </button>
+            </Link>
           </div>
           <p className="text-sm text-slate-600 mt-4 dark:text-slate-400">
             No credit card required for trial • SOC2 Compliant

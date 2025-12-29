@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ClauseShield - Analyze Documents</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1354ec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "slate-dark": "#0d121b",
+              "slate-light": "#e7ebf3",
+              "text-secondary": "#4c639a",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }#invoice-section { display: none; }
+        body:has(input[value="invoice"]:checked) #invoice-section { display: block; }
+        body:has(input[value="invoice"]:checked) #contract-section { display: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-dark dark:text-white font-display min-h-screen flex flex-col">
+<header class="w-full border-b border-slate-light dark:border-gray-800 bg-white dark:bg-background-dark sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">shield_lock</span>
+</div>
+<h2 class="text-slate-dark dark:text-white text-xl font-bold tracking-tight">ClauseShield</h2>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6">
+<a class="text-sm font-medium text-slate-dark hover:text-primary transition-colors" href="#">How it works</a>
+<a class="text-sm font-medium text-slate-dark hover:text-primary transition-colors" href="#">Security</a>
+<a class="text-sm font-medium text-slate-dark hover:text-primary transition-colors" href="#">Login</a>
+</nav>
+<button class="bg-primary hover:bg-blue-700 text-white text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm">
+                    Request demo
+                </button>
+</div>
+<button class="md:hidden text-slate-dark">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<div class="lg:col-span-5 flex flex-col gap-10">
+<div class="flex flex-col gap-4">
+<h1 class="text-4xl md:text-[42px] font-black leading-[1.1] tracking-tight text-slate-dark dark:text-white">
+                        Analyze Contracts &amp; Invoices with AI
+                    </h1>
+<p class="text-lg text-text-secondary leading-relaxed max-w-md">
+                        Securely upload your documents for AI-generated risk and discrepancy analysis. Designed for legal and finance teams.
+                    </p>
+</div>
+<div>
+<div class="inline-flex bg-slate-light/60 dark:bg-gray-800 p-1.5 rounded-xl">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only" name="analysis_type" type="radio" value="contract"/>
+<span class="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-text-secondary transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm dark:peer-checked:bg-gray-700 dark:peer-checked:text-white">
+<span class="material-symbols-outlined text-[20px]">description</span>
+                                Contract Analysis
+                            </span>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="analysis_type" type="radio" value="invoice"/>
+<span class="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-text-secondary transition-all peer-checked:bg-white peer-checked:text-primary peer-checked:shadow-sm dark:peer-checked:bg-gray-700 dark:peer-checked:text-white">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+                                Invoice Analysis
+                            </span>
+</label>
+</div>
+</div>
+<div class="flex flex-col gap-6 pt-4">
+<h3 class="text-xs font-bold uppercase tracking-wider text-text-secondary">Trust &amp; Security</h3>
+<div class="space-y-6">
+<div class="flex gap-4 items-start group">
+<div class="mt-1 flex-shrink-0 w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-dark dark:text-white">Confidential by design</h4>
+<p class="text-sm text-text-secondary mt-1">Data is encrypted in transit and at rest using AES-256 standards.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start group">
+<div class="mt-1 flex-shrink-0 w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-dark dark:text-white">Enterprise-grade security</h4>
+<p class="text-sm text-text-secondary mt-1">SOC2 Type II compliant processing environment for sensitive legal data.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start group">
+<div class="mt-1 flex-shrink-0 w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-dark dark:text-white">No obligation analysis</h4>
+<p class="text-sm text-text-secondary mt-1">Get a preliminary report instantly without mandatory account creation.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 p-4 rounded-lg flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">info</span>
+<p class="text-xs text-text-secondary leading-normal">
+<strong>Note for users:</strong> Documents are automatically purged from our analysis servers after 24 hours unless saved to a secure workspace.
+                    </p>
+</div>
+</div>
+<div class="lg:col-span-7">
+<div class="bg-white dark:bg-gray-800 rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-slate-light dark:border-gray-700 overflow-hidden">
+<div class="px-8 py-6 border-b border-slate-light dark:border-gray-700 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800">
+<h3 class="text-lg font-bold text-slate-dark dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">upload_file</span>
+                            Submit Document
+                        </h3>
+<span class="px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-semibold border border-green-100 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                            Secure Connection
+                        </span>
+</div>
+<div class="p-8">
+<form class="space-y-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">Full Name</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none" placeholder="e.g. Sarah Jennings" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">Work Email</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none" placeholder="sarah@company.com" type="email"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">Firm / Organization</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none" placeholder="e.g. Acme Legal LLP" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">Role</label>
+<div class="relative">
+<select class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none appearance-none cursor-pointer">
+<option disabled="" selected="" value="">Select your role</option>
+<option value="legal_counsel">Legal Counsel</option>
+<option value="finance_manager">Finance Manager</option>
+<option value="compliance_officer">Compliance Officer</option>
+<option value="other">Other</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none text-lg">expand_more</span>
+</div>
+</div>
+</div>
+<hr class="border-slate-light dark:border-gray-700 border-dashed"/>
+<div id="contract-section">
+<div class="space-y-6" id="contract-details">
+<div class="flex justify-between items-baseline">
+<h4 class="text-sm font-bold text-slate-dark dark:text-white uppercase tracking-wider">Contract Details</h4>
+<span class="text-xs text-text-secondary">Allowed: PDF, DOCX (Max 25MB)</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">Document Type</label>
+<div class="relative">
+<select class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none appearance-none cursor-pointer">
+<option value="nda">Non-Disclosure Agreement (NDA)</option>
+<option value="msa">Master Services Agreement (MSA)</option>
+<option value="dpa">Data Processing Addendum</option>
+<option value="other">Other</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none text-lg">expand_more</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">Jurisdiction</label>
+<div class="relative">
+<select class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none appearance-none cursor-pointer">
+<option value="us_ny">United States (New York)</option>
+<option value="us_de">United States (Delaware)</option>
+<option value="uk">United Kingdom</option>
+<option value="eu">European Union</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none text-lg">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative mt-8">
+<input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" type="file"/>
+<div class="w-full border-2 border-dashed border-slate-light dark:border-gray-600 rounded-xl bg-slate-light/20 dark:bg-gray-700/30 py-10 flex flex-col items-center justify-center text-center transition-all group-hover:border-primary/50 group-hover:bg-primary/5">
+<div class="w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-2xl">cloud_upload</span>
+</div>
+<p class="text-sm font-medium text-slate-dark dark:text-gray-200">
+<span class="text-primary font-bold">Click to upload</span> or drag and drop
+                                        </p>
+<p class="text-xs text-text-secondary mt-1">
+                                            Supported formats: PDF, DOCX
+                                        </p>
+</div>
+</div>
+</div>
+<div class="space-y-6" id="invoice-section">
+<div class="flex justify-between items-baseline">
+<h4 class="text-sm font-bold text-slate-dark dark:text-white uppercase tracking-wider">Invoice Details</h4>
+<span class="text-xs text-text-secondary">Allowed: PDF, XLS, CSV (Max 25MB)</span>
+</div>
+<div class="group relative">
+<input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" multiple="" type="file"/>
+<div class="w-full border-2 border-dashed border-slate-light dark:border-gray-600 rounded-xl bg-slate-light/20 dark:bg-gray-700/30 py-10 flex flex-col items-center justify-center text-center transition-all group-hover:border-primary/50 group-hover:bg-primary/5">
+<div class="w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-2xl">cloud_upload</span>
+</div>
+<p class="text-sm font-medium text-slate-dark dark:text-gray-200">
+<span class="text-primary font-bold">Click to upload invoice(s)</span> or drag and drop
+            </p>
+<p class="text-xs text-text-secondary mt-1">
+                Supported formats: PDF, XLS, XLSX, CSV
+            </p>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">
+            Related Contract <span class="text-text-secondary font-normal text-xs ml-1">(Optional)</span>
+</label>
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none" placeholder="e.g. MSA-2023-XY" type="text"/>
+<p class="text-xs text-text-secondary">Reference ID of the governing contract.</p>
+</div>
+<div class="space-y-3">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">Invoice Issues to Check</label>
+<div class="grid grid-cols-2 gap-3">
+<label class="flex items-center gap-2 cursor-pointer p-3 rounded-lg border border-slate-light dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-700/50 transition-colors">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-slate-dark dark:text-gray-300">Duplicate Payment</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer p-3 rounded-lg border border-slate-light dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-700/50 transition-colors">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-slate-dark dark:text-gray-300">Price Discrepancy</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer p-3 rounded-lg border border-slate-light dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-700/50 transition-colors">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-slate-dark dark:text-gray-300">Missing PO Number</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer p-3 rounded-lg border border-slate-light dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-700/50 transition-colors">
+<input class="rounded border-slate-300 text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
+<span class="text-sm text-slate-dark dark:text-gray-300">Tax Calculation</span>
+</label>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">Invoice Date Range <span class="text-text-secondary font-normal text-xs ml-1">(Optional)</span></label>
+<div class="grid grid-cols-2 gap-4">
+<div class="relative">
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none text-text-secondary" placeholder="From" type="date"/>
+<span class="text-[10px] uppercase font-bold text-text-secondary absolute top-[-6px] left-3 bg-white dark:bg-gray-800 px-1">From</span>
+</div>
+<div class="relative">
+<input class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none text-text-secondary" placeholder="To" type="date"/>
+<span class="text-[10px] uppercase font-bold text-text-secondary absolute top-[-6px] left-3 bg-white dark:bg-gray-800 px-1">To</span>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-slate-dark dark:text-gray-300">Notes for Reviewer</label>
+<textarea class="w-full px-4 py-2.5 rounded-lg border border-slate-light dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm outline-none" placeholder="Provide any additional context or specific instructions..." rows="3"></textarea>
+</div>
+<div class="flex items-center gap-3">
+<input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="supporting_docs" type="checkbox"/>
+<label class="text-sm font-medium text-slate-dark dark:text-gray-300 cursor-pointer select-none" for="supporting_docs">
+            I have supporting documents (emails, receipts) to attach
+        </label>
+</div>
+</div>
+<div class="flex items-start gap-3 bg-gray-50 dark:bg-gray-700/30 p-4 rounded-lg mt-8">
+<div class="flex h-6 items-center">
+<input class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary" id="legal_agree" name="legal_agree" type="checkbox"/>
+</div>
+<div class="text-sm">
+<label class="font-medium text-slate-dark dark:text-gray-200" for="legal_agree">Confidentiality Acknowledgment</label>
+<p class="text-text-secondary text-xs mt-0.5">I acknowledge that I have the authority to upload this document and agree to the <a class="text-primary hover:underline" href="#">Terms of Service</a> &amp; <a class="text-primary hover:underline" href="#">Privacy Policy</a>.</p>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+                                    Analyze my document(s)
+                                </button>
+<p class="text-center text-xs text-text-secondary mt-4">
+                                    By clicking Analyze, you agree to our standard processing agreement.
+                                </p>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-auto border-t border-slate-light dark:border-gray-800 bg-white dark:bg-background-dark py-10">
+<div class="max-w-7xl mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 opacity-80">
+<span class="material-symbols-outlined text-xl">shield_lock</span>
+<span class="text-sm font-bold text-slate-dark dark:text-white">ClauseShield</span>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-xs font-medium text-text-secondary hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-xs font-medium text-text-secondary hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-xs font-medium text-text-secondary hover:text-primary transition-colors" href="#">Security Statement</a>
+<a class="text-xs font-medium text-text-secondary hover:text-primary transition-colors" href="#">Cookie Settings</a>
+</div>
+<div class="text-xs text-text-secondary">
+                    © 2023 ClauseShield Inc. All rights reserved.
+                </div>
+</div>
+</div>
+</footer>
+</body></html>

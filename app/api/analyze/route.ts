@@ -68,6 +68,8 @@ export async function POST(request: Request) {
       "work_email",
       "workEmail",
     ]);
+    const role = getString(["role"]);
+    const metaTier = getString(["meta.tier", "meta_tier", "tier", "request.meta.tier"]);
     const legalAgree = getBoolean([
       "confidentiality_acknowledged",
       "confidentiality_ack",
@@ -113,6 +115,12 @@ export async function POST(request: Request) {
     const filesToUpload =
       normalizedAnalysisType === "contract" ? contractFiles : invoiceFiles;
     const fileKind = normalizedAnalysisType === "contract" ? "contract" : "invoice";
+    const retentionHours =
+      role === "enterprise" || metaTier === "enterprise"
+        ? 720
+        : role === "trial"
+          ? 168
+          : 24;
 
     const fileMetadata = [];
     for (const file of filesToUpload) {
@@ -162,6 +170,26 @@ export async function POST(request: Request) {
         throw new Error("Signed URL missing");
       }
 
+      const uploadedAt = new Date();
+      const expiresAt = new Date(
+        uploadedAt.getTime() + retentionHours * 60 * 60 * 1000,
+      );
+      const { error: insertError } = await supabase
+        .from("file_uploads")
+        .insert({
+          request_id: requestId,
+          bucket: "analyze-uploads",
+          storage_path: storagePath,
+          kind: fileKind,
+          retention_hours: retentionHours,
+          uploaded_at: uploadedAt.toISOString(),
+          expires_at: expiresAt.toISOString(),
+          status: "uploaded",
+        });
+      if (insertError) {
+        throw new Error(insertError.message);
+      }
+
       fileMetadata.push({
         kind: fileKind,
         filename: file.name,
@@ -183,7 +211,7 @@ export async function POST(request: Request) {
           "firm_organization",
           "firmOrganization",
         ]),
-        role: getString(["role"]),
+        role,
       },
       contract_analysis:
         normalizedAnalysisType === "contract"
@@ -261,7 +289,6 @@ export async function POST(request: Request) {
       files: fileMetadata,
     });
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : String(error) },
       { status: 500 },

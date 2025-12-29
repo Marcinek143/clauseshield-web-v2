@@ -1,3 +1,23 @@
+/**
+ * 🔒 LOCKED PAGE — DO NOT MODIFY WITHOUT EXPLICIT REVIEW
+ *
+ * Route: /analyze
+ * Purpose: Public AI intake for contract & invoice analysis
+ *
+ * This page is production-critical.
+ * UI, layout, fields, and behavior are frozen.
+ *
+ * Allowed changes:
+ * - Backend logic (/api/analyze)
+ * - AI processing
+ * - Make.com workflows
+ *
+ * Any UI or field changes REQUIRE:
+ * - Updated Stitch design
+ * - Product review
+ *
+ * Schema version: v1.0
+ */
 "use client";
 
 import { useState } from "react";
@@ -12,6 +32,8 @@ const invoiceIssueOptions = [
   { value: "missing_po_number", label: "Missing PO Number" },
   { value: "tax_calculation", label: "Tax Calculation" },
 ];
+
+export const ANALYZE_FORM_SCHEMA_VERSION = "v1.0";
 
 export default function AnalyzePage() {
   const [analysisType, setAnalysisType] = useState<AnalysisType>("contract");
@@ -82,6 +104,10 @@ export default function AnalyzePage() {
             ? [contractFile]
             : []
           : invoiceFiles,
+      meta: {
+        schema_version: ANALYZE_FORM_SCHEMA_VERSION,
+        source: "analyze",
+      },
       source: "analyze",
     };
 

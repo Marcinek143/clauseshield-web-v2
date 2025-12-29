@@ -64,54 +64,48 @@ export default function AnalyzePage() {
       : invoiceFiles.length > 0;
   const isFormValid = isIdentityValid && legalAgree && hasRequiredFiles;
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log("SUBMIT FIRED");
     if (!isFormValid) {
       return;
     }
 
-    const payload = {
-      analysis_type: analysisType,
-      user: {
-        full_name: fullName.trim(),
-        email: workEmail.trim(),
-        organization: organization.trim(),
-        role,
-      },
-      contract_analysis:
-        analysisType === "contract"
-          ? {
-              document_type: documentType,
-              jurisdiction,
-            }
-          : null,
-      invoice_analysis:
-        analysisType === "invoice"
-          ? {
-              related_contract: relatedContract.trim() || null,
-              invoice_issues: invoiceIssues,
-              date_range: {
-                from: invoiceDateFrom || null,
-                to: invoiceDateTo || null,
-              },
-              notes: invoiceNotes.trim() || null,
-              supporting_documents: supportingDocs,
-            }
-          : null,
-      files:
-        analysisType === "contract"
-          ? contractFile
-            ? [contractFile]
-            : []
-          : invoiceFiles,
-      meta: {
-        schema_version: ANALYZE_FORM_SCHEMA_VERSION,
-        source: "analyze",
-      },
-      source: "analyze",
-    };
+    const formData = new FormData(event.currentTarget);
+    formData.append("analysis_type", analysisType);
+    formData.append("full_name", fullName.trim());
+    formData.append("email", workEmail.trim());
+    formData.append("organization", organization.trim());
+    formData.append("role", role);
+    formData.append(
+      "confidentiality_acknowledged",
+      legalAgree ? "true" : "false",
+    );
 
-    console.log("Analyze payload", payload);
+    if (analysisType === "contract") {
+      formData.append("document_type", documentType);
+      formData.append("jurisdiction", jurisdiction);
+      if (contractFile) {
+        formData.append("contractFiles", contractFile);
+      }
+    }
+
+    if (analysisType === "invoice") {
+      formData.append("related_contract", relatedContract);
+      invoiceIssues.forEach((issue) =>
+        formData.append("invoice_issues", issue),
+      );
+      formData.append("invoice_date_from", invoiceDateFrom);
+      formData.append("invoice_date_to", invoiceDateTo);
+      formData.append("invoice_notes", invoiceNotes);
+      formData.append("supporting_docs", supportingDocs ? "true" : "false");
+      invoiceFiles.forEach((file) => formData.append("invoiceFiles", file));
+    }
+
+    await fetch("/api/analyze", {
+      method: "POST",
+      body: formData,
+    });
   };
 
   return (

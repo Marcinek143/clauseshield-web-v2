@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 import CleanupHeader from "./components/CleanupHeader";
 import KPICards from "./components/KPICards";
@@ -31,9 +32,9 @@ type CleanupPageProps = {
 };
 
 export default async function CleanupPage({ searchParams }: CleanupPageProps) {
-  const activeTab = resolveTab(searchParams?.tab);
-  const rawPage = Number.parseInt(searchParams?.page ?? "1", 10);
-  const page = Number.isFinite(rawPage) && rawPage > 0 ? rawPage : 1;
+  const tab = searchParams?.tab ?? "runs";
+  const page = Math.max(1, Number(searchParams?.page ?? 1));
+  const activeTab = resolveTab(tab);
 
   const statsPromise = fetchCleanupStats();
   const fileIssuesPromise = fetchFileIssues();
@@ -100,6 +101,9 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
       <div className="layout-container flex h-full grow flex-col">
         <div className="px-6 md:px-10 lg:px-20 flex flex-1 justify-center py-8">
           <div className="layout-content-container flex flex-col max-w-[1200px] flex-1 gap-8">
+            <div style={{ color: "red" }}>
+              DEBUG: tab={tab}, page={page}
+            </div>
             <CleanupHeader
               status={stats.health.status}
               action={<TriggerCleanupButton isRunning={stats.isRunning} />}

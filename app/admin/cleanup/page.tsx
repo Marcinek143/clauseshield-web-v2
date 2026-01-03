@@ -9,6 +9,7 @@ import { fetchCleanupStats } from "./actions/fetchCleanupStats";
 import { fetchCleanupRuns } from "./actions/fetchCleanupRuns";
 import { fetchFileIssues } from "./actions/fetchFileIssues";
 import type { CleanupTabKey } from "./components/CleanupTabs";
+import ThemeToggle from "@/components/layout/ThemeToggle";
 
 const PAGE_SIZE = 5;
 
@@ -76,6 +77,7 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
               />
             </div>
           </div>
+          <ThemeToggle />
           <button
             className="flex items-center justify-center size-10 rounded-full hover:bg-gray-200 dark:hover:bg-navy-800/70 transition text-[#4c639a] dark:text-slate-400"
             type="button"

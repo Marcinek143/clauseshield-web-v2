@@ -38,17 +38,22 @@ export default function CleanupRunsTable({
   page,
   pageSize,
 }: CleanupRunsTableProps) {
-  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+  const totalPages = Math.ceil(totalCount / pageSize);
   const from = totalCount === 0 ? 0 : (page - 1) * pageSize + 1;
   const to = totalCount === 0 ? 0 : from + runs.length - 1;
+  const isPrevDisabled = page <= 1;
+  const isNextDisabled = totalPages === 0 || page >= totalPages;
 
-  const pageSet = new Set<number>();
-  [1, page - 1, page, page + 1, totalPages].forEach((value) => {
-    if (value >= 1 && value <= totalPages) {
-      pageSet.add(value);
-    }
-  });
-  const pages = Array.from(pageSet).sort((a, b) => a - b);
+  const pages =
+    totalPages > 0
+      ? Array.from(
+          new Set(
+            [1, page - 1, page, page + 1, totalPages].filter(
+              (value) => value >= 1 && value <= totalPages,
+            ),
+          ),
+        ).sort((a, b) => a - b)
+      : [];
 
   return (
     <div className="rounded-xl border border-[#cfd6e7] dark:border-navy-700/70 bg-white dark:bg-navy-800/70 overflow-hidden shadow-sm dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
@@ -116,7 +121,7 @@ export default function CleanupRunsTable({
                     </span>
                   </td>
                   <td className="px-6 py-4 text-[#0d121b] dark:text-slate-100">
-                    {formatDateTime(run.created_at)}
+                    {formatDateTime(run.run_at)}
                   </td>
                   <td className="px-6 py-4 text-[#4c639a] dark:text-slate-400">
                     {formatDuration(run.duration_ms)}
@@ -171,16 +176,27 @@ export default function CleanupRunsTable({
           </div>
           <div>
             <nav aria-label="Pagination" className="isolate inline-flex -space-x-px rounded-md shadow-sm">
-              <Link
-                className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
-                href={{ pathname: "/admin/cleanup", query: { tab: "runs", page: Math.max(1, page - 1) } }}
-                aria-disabled={page === 1}
-              >
-                <span className="sr-only">Previous</span>
-                <span className="material-symbols-outlined text-[20px]">
-                  chevron_left
+              {isPrevDisabled ? (
+                <span
+                  className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-300 ring-1 ring-inset ring-gray-200 dark:text-slate-600 dark:ring-navy-700/70"
+                  aria-disabled="true"
+                >
+                  <span className="sr-only">Previous</span>
+                  <span className="material-symbols-outlined text-[20px]">
+                    chevron_left
+                  </span>
                 </span>
-              </Link>
+              ) : (
+                <Link
+                  className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
+                  href={`?page=${page - 1}`}
+                >
+                  <span className="sr-only">Previous</span>
+                  <span className="material-symbols-outlined text-[20px]">
+                    chevron_left
+                  </span>
+                </Link>
+              )}
               {pages.map((pageNumber, index) => {
                 const previous = pages[index - 1];
                 const showEllipsis = previous && pageNumber - previous > 1;
@@ -197,7 +213,7 @@ export default function CleanupRunsTable({
                           ? "relative z-10 inline-flex items-center bg-primary px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                           : "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:text-slate-200 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
                       }
-                      href={{ pathname: "/admin/cleanup", query: { tab: "runs", page: pageNumber } }}
+                      href={`?page=${pageNumber}`}
                       aria-current={pageNumber === page ? "page" : undefined}
                     >
                       {pageNumber}
@@ -205,16 +221,27 @@ export default function CleanupRunsTable({
                   </span>
                 );
               })}
-              <Link
-                className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
-                href={{ pathname: "/admin/cleanup", query: { tab: "runs", page: Math.min(totalPages, page + 1) } }}
-                aria-disabled={page === totalPages}
-              >
-                <span className="sr-only">Next</span>
-                <span className="material-symbols-outlined text-[20px]">
-                  chevron_right
+              {isNextDisabled ? (
+                <span
+                  className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-300 ring-1 ring-inset ring-gray-200 dark:text-slate-600 dark:ring-navy-700/70"
+                  aria-disabled="true"
+                >
+                  <span className="sr-only">Next</span>
+                  <span className="material-symbols-outlined text-[20px]">
+                    chevron_right
+                  </span>
                 </span>
-              </Link>
+              ) : (
+                <Link
+                  className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
+                  href={`?page=${page + 1}`}
+                >
+                  <span className="sr-only">Next</span>
+                  <span className="material-symbols-outlined text-[20px]">
+                    chevron_right
+                  </span>
+                </Link>
+              )}
             </nav>
           </div>
         </div>

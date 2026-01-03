@@ -37,7 +37,7 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
   const fileIssuesPromise = fetchFileIssues();
   const runsPromise =
     activeTab === "runs"
-      ? fetchCleanupRuns({ page, pageSize: PAGE_SIZE })
+      ? fetchCleanupRuns(page, PAGE_SIZE)
       : Promise.resolve({
           runs: [],
           totalCount: 0,

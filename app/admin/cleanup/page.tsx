@@ -101,9 +101,6 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
       <div className="layout-container flex h-full grow flex-col">
         <div className="px-6 md:px-10 lg:px-20 flex flex-1 justify-center py-8">
           <div className="layout-content-container flex flex-col max-w-[1200px] flex-1 gap-8">
-            <div style={{ color: "red" }}>
-              DEBUG: tab={tab}, page={page}
-            </div>
             <CleanupHeader
               status={stats.health.status}
               action={<TriggerCleanupButton isRunning={stats.isRunning} />}

@@ -33,7 +33,7 @@ type CleanupPageProps = {
 
 export default async function CleanupPage({ searchParams }: CleanupPageProps) {
   const tab = searchParams?.tab ?? "runs";
-  const page = Number(searchParams?.page ?? "1");
+  const page = Math.max(1, Number(searchParams?.page ?? "1") || 1);
   const activeTab = resolveTab(tab);
 
   const statsPromise = fetchCleanupStats();

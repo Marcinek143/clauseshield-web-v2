@@ -30,25 +30,46 @@ export async function fetchCleanupRuns(
 
   try {
     const supabase = supabaseServer();
-    const from = (safePage - 1) * safePageSize;
-    const to = from + safePageSize - 1;
+    const fetchPage = async (targetPage: number) => {
+      const from = (targetPage - 1) * safePageSize;
+      const to = from + safePageSize - 1;
 
-    const { data, error, count } = await supabase
-      .from("cleanup_runs")
-      .select(
-        "id, run_at, scanned_count, deleted_count, failed_count, duration_ms, trigger_source, notes",
-        { count: "exact" },
-      )
-      .range(from, to)
-      .order("run_at", { ascending: false });
+      return supabase
+        .from("cleanup_runs")
+        .select(
+          "id, run_at, scanned_count, deleted_count, failed_count, duration_ms, trigger_source, notes",
+          { count: "exact" },
+        )
+        .range(from, to)
+        .order("run_at", { ascending: false });
+    };
 
-    if (error) {
-      throw error;
+    const firstPass = await fetchPage(safePage);
+
+    if (firstPass.error) {
+      throw firstPass.error;
+    }
+
+    const totalCount = firstPass.count ?? 0;
+    const totalPages = Math.max(1, Math.ceil(totalCount / safePageSize));
+    const effectivePage = Math.min(safePage, totalPages);
+
+    if (effectivePage !== safePage) {
+      const adjusted = await fetchPage(effectivePage);
+      if (adjusted.error) {
+        throw adjusted.error;
+      }
+      return {
+        runs: adjusted.data ?? [],
+        totalCount,
+        page: effectivePage,
+        pageSize: safePageSize,
+      };
     }
 
     return {
-      runs: data ?? [],
-      totalCount: count ?? 0,
+      runs: firstPass.data ?? [],
+      totalCount,
       page: safePage,
       pageSize: safePageSize,
     };

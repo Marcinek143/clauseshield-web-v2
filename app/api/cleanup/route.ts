@@ -18,6 +18,7 @@ export async function POST(request: Request) {
   const supabase = createClient(supabaseUrl, serviceRoleKey);
   const startTime = Date.now();
   const runAt = new Date().toISOString();
+  const staleCutoff = new Date(Date.now() - 10 * 60 * 1000).toISOString();
   const url = new URL(request.url);
   const requestedTrigger =
     request.headers.get("x-cleanup-source") ??
@@ -32,9 +33,25 @@ export async function POST(request: Request) {
   let scannedCount = 0;
   let deleted = 0;
   let failed = 0;
+  let finalStatus: "success" | "failed" | null = null;
+  let finalNotes: string | null = null;
   const deletedFileIds: string[] = [];
 
   try {
+    // Fail stale runs so they do not block future cleanups.
+    const { error: staleError } = await supabase
+      .from("cleanup_runs")
+      .update({
+        status: "failed",
+        notes: "auto-failed: stale run",
+      })
+      .eq("status", "running")
+      .lt("run_at", staleCutoff);
+
+    if (staleError) {
+      throw staleError;
+    }
+
     // DB-backed lock: refuse to start if any cleanup is already marked running.
     const { data: runningRuns, error: runningError } = await supabase
       .from("cleanup_runs")
@@ -88,15 +105,8 @@ export async function POST(request: Request) {
     }
 
     if (lockHolder?.id !== cleanupRunId) {
-      await supabase
-        .from("cleanup_runs")
-        .update({
-          status: "failed",
-          notes: "cleanup_already_running",
-          duration_ms: Date.now() - startTime,
-        })
-        .eq("id", cleanupRunId);
-
+      finalStatus = "failed";
+      finalNotes = "cleanup_already_running";
       return NextResponse.json(
         { success: false, reason: "cleanup_already_running" },
         { status: 409 }
@@ -139,25 +149,8 @@ export async function POST(request: Request) {
       deletedFileIds.push(file.id);
     }
 
-    const durationMs = Date.now() - startTime;
-    const notes = failed > 0 ? "Some deletions failed" : null;
-    const status = failed > 0 ? "failed" : "success";
-
-    const { error: auditError } = await supabase
-      .from("cleanup_runs")
-      .update({
-        status,
-        scanned_count: scannedCount,
-        deleted_count: deleted,
-        failed_count: failed,
-        duration_ms: durationMs,
-        notes,
-      })
-      .eq("id", cleanupRunId);
-
-    if (auditError) {
-      console.error("Failed to update cleanup run audit", auditError);
-    }
+    finalStatus = failed > 0 ? "failed" : "success";
+    finalNotes = failed > 0 ? "Some deletions failed" : null;
 
     for (const fileId of deletedFileIds) {
       try {
@@ -176,21 +169,24 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, deleted, failed });
   } catch (error) {
-    const durationMs = Date.now() - startTime;
-    const errorMessage =
+    finalStatus = "failed";
+    finalNotes =
       error instanceof Error ? error.message : "Unknown cleanup error";
-
+    return NextResponse.json({ success: false }, { status: 500 });
+  } finally {
     if (cleanupRunId) {
+      const durationMs = Date.now() - startTime;
+
       try {
         const { error: auditError } = await supabase
           .from("cleanup_runs")
           .update({
-            status: "failed",
+            status: finalStatus ?? "failed",
             scanned_count: scannedCount,
             deleted_count: deleted,
             failed_count: failed,
             duration_ms: durationMs,
-            notes: errorMessage,
+            notes: finalNotes,
           })
           .eq("id", cleanupRunId);
 
@@ -201,7 +197,5 @@ export async function POST(request: Request) {
         console.error("Failed to update cleanup run audit", auditError);
       }
     }
-
-    return NextResponse.json({ success: false }, { status: 500 });
   }
 }

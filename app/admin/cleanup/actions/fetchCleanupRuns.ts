@@ -1,4 +1,4 @@
-import { getSupabaseServerClient } from "./supabase";
+import { supabaseServer } from "@/lib/supabaseServer";
 
 export type CleanupRunRow = {
   id: string;
@@ -26,7 +26,7 @@ export async function fetchCleanupRuns({
   pageSize?: number;
 }): Promise<CleanupRunsResult> {
   try {
-    const supabase = getSupabaseServerClient();
+    const supabase = supabaseServer();
     const safePage = Number.isFinite(page) && page > 0 ? page : 1;
     const safePageSize = Number.isFinite(pageSize) && pageSize > 0 ? pageSize : 5;
     const from = (safePage - 1) * safePageSize;

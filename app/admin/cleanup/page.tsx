@@ -2,6 +2,7 @@ import CleanupHeader from "./components/CleanupHeader";
 import KPICards from "./components/KPICards";
 import HealthBanner from "./components/HealthBanner";
 import CleanupTabs from "./components/CleanupTabs";
+import TriggerCleanupButton from "./components/TriggerCleanupButton";
 import CleanupRunsTable from "./components/tables/CleanupRunsTable";
 import FilesTable from "./components/tables/FilesTable";
 import RetentionTable from "./components/tables/RetentionTable";
@@ -97,7 +98,10 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
       <div className="layout-container flex h-full grow flex-col">
         <div className="px-6 md:px-10 lg:px-20 flex flex-1 justify-center py-8">
           <div className="layout-content-container flex flex-col max-w-[1200px] flex-1 gap-8">
-            <CleanupHeader status={stats.health.status} />
+            <CleanupHeader
+              status={stats.health.status}
+              action={<TriggerCleanupButton />}
+            />
             <KPICards stats={stats} />
             <HealthBanner
               status={stats.health.status}

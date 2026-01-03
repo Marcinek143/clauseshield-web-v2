@@ -1,6 +1,6 @@
 "use server";
 
-import { getSupabaseAdminClient } from "./supabase";
+import { headers } from "next/headers";
 
 export type TriggerCleanupResult = {
   success: boolean;
@@ -9,97 +9,39 @@ export type TriggerCleanupResult = {
 };
 
 export async function triggerCleanup(): Promise<TriggerCleanupResult> {
-  try {
-    const supabase = getSupabaseAdminClient();
-    const startTime = Date.now();
-    const nowIso = new Date().toISOString();
-
-    const { data, error } = await supabase
-      .from("file_uploads")
-      .select("id, bucket, storage_path")
-      .lt("expires_at", nowIso)
-      .eq("status", "uploaded");
-
-    if (error) {
-      throw error;
-    }
-
-    const scannedCount = data?.length ?? 0;
-    let deleted = 0;
-    let failed = 0;
-    const deletedFileIds: string[] = [];
-
-    for (const file of data ?? []) {
-      const { error: removeError } = await supabase.storage
-        .from(file.bucket)
-        .remove([file.storage_path]);
-
-      if (removeError) {
-        failed += 1;
-        continue;
-      }
-
-      const { error: updateError } = await supabase
-        .from("file_uploads")
-        .update({ status: "deleted", deleted_at: new Date().toISOString() })
-        .eq("id", file.id);
-
-      if (updateError) {
-        failed += 1;
-        continue;
-      }
-
-      deleted += 1;
-      deletedFileIds.push(file.id);
-    }
-
-    const durationMs = Date.now() - startTime;
-    const notes = failed > 0 ? "Some deletions failed" : null;
-    let cleanupRunId: string | null = null;
-
-    try {
-      const { data: cleanupRun, error: auditError } = await supabase
-        .from("cleanup_runs")
-        .insert({
-          trigger_source: "manual",
-          scanned_count: scannedCount,
-          deleted_count: deleted,
-          failed_count: failed,
-          duration_ms: durationMs,
-          notes,
-        })
-        .select("id")
-        .single();
-
-      if (auditError) {
-        console.error("Failed to insert cleanup run audit", auditError);
-      } else {
-        cleanupRunId = cleanupRun?.id ?? null;
-      }
-    } catch (auditError) {
-      console.error("Failed to insert cleanup run audit", auditError);
-    }
-
-    if (cleanupRunId) {
-      for (const fileId of deletedFileIds) {
-        try {
-          const { error: linkError } = await supabase
-            .from("file_uploads")
-            .update({ cleanup_run_id: cleanupRunId })
-            .eq("id", fileId);
-
-          if (linkError) {
-            console.error("Failed to link cleanup run to file upload", linkError);
-          }
-        } catch (linkError) {
-          console.error("Failed to link cleanup run to file upload", linkError);
-        }
-      }
-    }
-
-    return { success: true, deleted, failed };
-  } catch (error) {
-    console.error("Failed to trigger cleanup", error);
-    return { success: false, deleted: 0, failed: 0 };
+  const secret = process.env.CLEANUP_SECRET;
+  if (!secret) {
+    throw new Error("CLEANUP_SECRET is not set");
   }
+
+  const headerList = headers();
+  const host =
+    headerList.get("x-forwarded-host") ?? headerList.get("host");
+  const protocol =
+    headerList.get("x-forwarded-proto") ??
+    (process.env.NODE_ENV === "production" ? "https" : "http");
+  const baseUrl =
+    host
+      ? `${protocol}://${host}`
+      : process.env.NEXT_PUBLIC_SITE_URL ??
+        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null);
+
+  if (!baseUrl) {
+    throw new Error("Unable to determine base URL for cleanup request");
+  }
+
+  const response = await fetch(`${baseUrl}/api/cleanup`, {
+    method: "POST",
+    headers: {
+      "x-cleanup-secret": secret,
+    },
+    cache: "no-store",
+  });
+
+  if (response.status !== 200) {
+    throw new Error(`Cleanup failed with status ${response.status}`);
+  }
+
+  const data = (await response.json()) as TriggerCleanupResult;
+  return data;
 }

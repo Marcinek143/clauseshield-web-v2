@@ -1,4 +1,4 @@
-import { getSupabaseServerClient } from "./supabase";
+import { supabaseServer } from "@/lib/supabaseServer";
 
 export type CleanupHealthStatus = "healthy" | "warning" | "critical";
 
@@ -46,7 +46,7 @@ const HEALTH_CONTENT: Record<CleanupHealthStatus, { title: string; message: stri
 
 export async function fetchCleanupStats(): Promise<CleanupStats> {
   try {
-    const supabase = getSupabaseServerClient();
+    const supabase = supabaseServer();
     const now = new Date();
     const since24h = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
 

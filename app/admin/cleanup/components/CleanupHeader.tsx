@@ -1,9 +1,5 @@
-"use client";
-
-import { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
+import type { ReactNode } from "react";
 import type { CleanupHealthStatus } from "../actions/fetchCleanupStats";
-import { triggerCleanup } from "../actions/triggerCleanup";
 
 // Dark mode palette matches Stitch PNG: muted status tones on navy surfaces.
 const STATUS_STYLES: Record<
@@ -40,21 +36,14 @@ const STATUS_STYLES: Record<
 
 type CleanupHeaderProps = {
   status: CleanupHealthStatus;
+  action?: ReactNode;
 };
 
-export default function CleanupHeader({ status }: CleanupHeaderProps) {
-  const router = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPending, startTransition] = useTransition();
+export default function CleanupHeader({
+  status,
+  action,
+}: CleanupHeaderProps) {
   const statusStyle = STATUS_STYLES[status];
-
-  const handleTrigger = () => {
-    startTransition(async () => {
-      await triggerCleanup();
-      setIsModalOpen(false);
-      router.refresh();
-    });
-  };
 
   return (
     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -77,51 +66,8 @@ export default function CleanupHeader({ status }: CleanupHeaderProps) {
             Status: {statusStyle.label}
           </p>
         </div>
-        <button
-          className="flex items-center gap-2 h-10 px-5 bg-primary hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors shadow-sm shadow-blue-500/30 dark:shadow-blue-500/20"
-          type="button"
-          onClick={() => setIsModalOpen(true)}
-        >
-          <span className="material-symbols-outlined text-[20px]">
-            play_circle
-          </span>
-          Trigger Cleanup Now
-        </button>
+        {action ? <div className="flex items-center">{action}</div> : null}
       </div>
-      {isModalOpen ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          {/* Dark mode modal styling uses a deep navy panel with soft elevation. */}
-          <div className="w-full max-w-md rounded-xl border border-[#cfd6e7] dark:border-navy-700/70 bg-white dark:bg-navy-800/90 shadow-xl dark:shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
-            <div className="p-6 border-b border-[#e7ebf3] dark:border-navy-700/60">
-              <h2 className="text-lg font-bold text-[#0d121b] dark:text-slate-100">
-                Trigger cleanup?
-              </h2>
-              <p className="mt-2 text-sm text-[#4c639a] dark:text-slate-300">
-                This will scan for expired files, delete eligible records, and
-                log a new cleanup run.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 justify-end p-6">
-              <button
-                className="flex items-center justify-center h-10 px-4 rounded-lg border border-[#cfd6e7] dark:border-navy-700/70 text-[#0d121b] dark:text-slate-100 hover:bg-gray-50 dark:hover:bg-navy-800/70 text-sm font-medium transition-colors"
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                disabled={isPending}
-              >
-                Cancel
-              </button>
-              <button
-                className="flex items-center justify-center h-10 px-4 rounded-lg bg-primary hover:bg-blue-700 text-white text-sm font-semibold transition-colors dark:shadow-blue-500/20"
-                type="button"
-                onClick={handleTrigger}
-                disabled={isPending}
-              >
-                {isPending ? "Triggering..." : "Run Cleanup"}
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 }

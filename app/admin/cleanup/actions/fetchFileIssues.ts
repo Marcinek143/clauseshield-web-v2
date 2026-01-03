@@ -1,4 +1,4 @@
-import { getSupabaseServerClient } from "./supabase";
+import { supabaseServer } from "@/lib/supabaseServer";
 
 export type FileIssueRow = {
   id: string;
@@ -29,7 +29,7 @@ export type FileIssuesResult = {
 
 export async function fetchFileIssues(): Promise<FileIssuesResult> {
   try {
-    const supabase = getSupabaseServerClient();
+    const supabase = supabaseServer();
     const now = new Date();
     const nowIso = now.toISOString();
 

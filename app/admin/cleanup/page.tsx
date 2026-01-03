@@ -34,18 +34,24 @@ type CleanupPageProps = {
 export default async function CleanupPage({ searchParams }: CleanupPageProps) {
   const tab = searchParams?.tab ?? "runs";
   const page = Math.max(1, Number(searchParams?.page ?? "1") || 1);
+  const pageSize = PAGE_SIZE;
   const activeTab = resolveTab(tab);
+
+  console.log("ADMIN CLEANUP PAGE", {
+    page,
+    pageSize,
+  });
 
   const statsPromise = fetchCleanupStats();
   const fileIssuesPromise = fetchFileIssues();
   const runsPromise =
     activeTab === "runs"
-      ? fetchCleanupRuns(page, PAGE_SIZE)
+      ? fetchCleanupRuns(page, pageSize)
       : Promise.resolve({
           runs: [],
           totalCount: 0,
           page,
-          pageSize: PAGE_SIZE,
+          pageSize,
         });
 
   const [stats, fileIssues, runsResult] = await Promise.all([

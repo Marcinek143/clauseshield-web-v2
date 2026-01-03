@@ -17,8 +17,8 @@ export async function POST(request: Request) {
 
   const supabase = createClient(supabaseUrl, serviceRoleKey);
   const startTime = Date.now();
-  const runAt = new Date().toISOString();
-  const staleCutoff = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+  const runAt = new Date(startTime).toISOString();
+  const staleCutoff = new Date(startTime - 10 * 60 * 1000).toISOString();
   const url = new URL(request.url);
   const requestedTrigger =
     request.headers.get("x-cleanup-source") ??
@@ -33,84 +33,95 @@ export async function POST(request: Request) {
   let scannedCount = 0;
   let deleted = 0;
   let failed = 0;
-  let finalStatus: "success" | "failed" | null = null;
+  let finalStatus: "success" | "failed" = "failed";
   let finalNotes: string | null = null;
   const deletedFileIds: string[] = [];
+  let responseStatus = 200;
+  let responseBody: { success: boolean; deleted?: number; failed?: number } = {
+    success: true,
+    deleted: 0,
+    failed: 0,
+  };
 
-  try {
-    // Fail stale runs so they do not block future cleanups.
-    const { error: staleError } = await supabase
+  // Lifecycle step 1: auto-fail stale locks before checking for an active run.
+  const { data: staleRuns, error: staleFetchError } = await supabase
+    .from("cleanup_runs")
+    .select("id, run_at")
+    .eq("status", "running")
+    .lt("run_at", staleCutoff);
+
+  if (staleFetchError) {
+    console.error("Failed to fetch stale cleanup runs", staleFetchError);
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
+
+  for (const staleRun of staleRuns ?? []) {
+    const parsedRunAt = staleRun.run_at
+      ? new Date(staleRun.run_at).getTime()
+      : startTime;
+    const runAtMs = Number.isNaN(parsedRunAt) ? startTime : parsedRunAt;
+    // duration_ms is stored as seconds here to satisfy the stale-lock requirement.
+    const durationSeconds = Math.max(
+      0,
+      Math.floor((startTime - runAtMs) / 1000)
+    );
+
+    const { error: staleUpdateError } = await supabase
       .from("cleanup_runs")
       .update({
         status: "failed",
-        notes: "auto-failed: stale run",
+        notes: "auto-failed: stale lock",
+        duration_ms: durationSeconds,
       })
-      .eq("status", "running")
-      .lt("run_at", staleCutoff);
+      .eq("id", staleRun.id);
 
-    if (staleError) {
-      throw staleError;
+    if (staleUpdateError) {
+      console.error("Failed to auto-fail stale cleanup run", staleUpdateError);
+      return NextResponse.json({ success: false }, { status: 500 });
     }
+  }
 
-    // DB-backed lock: refuse to start if any cleanup is already marked running.
-    const { data: runningRuns, error: runningError } = await supabase
-      .from("cleanup_runs")
-      .select("id")
-      .eq("status", "running")
-      .limit(1);
+  // Lifecycle step 2: refuse to start if another run is still active.
+  const { data: runningRuns, error: runningError } = await supabase
+    .from("cleanup_runs")
+    .select("id")
+    .eq("status", "running")
+    .limit(1);
 
-    if (runningError) {
-      throw runningError;
-    }
+  if (runningError) {
+    console.error("Failed to check for running cleanup", runningError);
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
 
-    if ((runningRuns?.length ?? 0) > 0) {
-      return NextResponse.json(
-        { success: false, reason: "cleanup_already_running" },
-        { status: 409 }
-      );
-    }
+  if ((runningRuns?.length ?? 0) > 0) {
+    return NextResponse.json(
+      { success: false, reason: "cleanup_already_running" },
+      { status: 409 }
+    );
+  }
 
-    // Insert a running row to claim the lock for this run.
-    const { data: cleanupRun, error: insertError } = await supabase
-      .from("cleanup_runs")
-      .insert({
-        status: "running",
-        trigger_source: triggerSource,
-        run_at: runAt,
-      })
-      .select("id")
-      .single();
+  // Lifecycle step 3: insert a running row and finalize it in finally.
+  const { data: cleanupRun, error: insertError } = await supabase
+    .from("cleanup_runs")
+    .insert({
+      status: "running",
+      trigger_source: triggerSource,
+      run_at: runAt,
+    })
+    .select("id")
+    .single();
 
-    if (insertError) {
-      throw insertError;
-    }
+  if (insertError) {
+    console.error("Failed to insert cleanup run", insertError);
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
 
-    cleanupRunId = cleanupRun?.id ?? null;
+  cleanupRunId = cleanupRun?.id ?? null;
+
+  // Lifecycle step 4: run cleanup work and record the outcome.
+  try {
     if (!cleanupRunId) {
       throw new Error("Cleanup run ID missing after insert");
-    }
-
-    // If another run slipped in concurrently, only the earliest keeps the lock.
-    const { data: lockHolder, error: lockError } = await supabase
-      .from("cleanup_runs")
-      .select("id")
-      .eq("status", "running")
-      .order("run_at", { ascending: true })
-      .order("id", { ascending: true })
-      .limit(1)
-      .single();
-
-    if (lockError) {
-      throw lockError;
-    }
-
-    if (lockHolder?.id !== cleanupRunId) {
-      finalStatus = "failed";
-      finalNotes = "cleanup_already_running";
-      return NextResponse.json(
-        { success: false, reason: "cleanup_already_running" },
-        { status: 409 }
-      );
     }
 
     const { data, error } = await supabase
@@ -149,9 +160,6 @@ export async function POST(request: Request) {
       deletedFileIds.push(file.id);
     }
 
-    finalStatus = failed > 0 ? "failed" : "success";
-    finalNotes = failed > 0 ? "Some deletions failed" : null;
-
     for (const fileId of deletedFileIds) {
       try {
         const { error: linkError } = await supabase
@@ -167,35 +175,46 @@ export async function POST(request: Request) {
       }
     }
 
-    return NextResponse.json({ success: true, deleted, failed });
+    finalStatus = "success";
+    finalNotes = failed > 0 ? "Some deletions failed" : null;
+    responseBody = { success: true, deleted, failed };
   } catch (error) {
     finalStatus = "failed";
     finalNotes =
       error instanceof Error ? error.message : "Unknown cleanup error";
-    return NextResponse.json({ success: false }, { status: 500 });
+    responseStatus = 500;
+    responseBody = { success: false };
   } finally {
-    if (cleanupRunId) {
-      const durationMs = Date.now() - startTime;
+    const durationMs = Date.now() - startTime;
 
-      try {
-        const { error: auditError } = await supabase
-          .from("cleanup_runs")
-          .update({
-            status: finalStatus ?? "failed",
-            scanned_count: scannedCount,
-            deleted_count: deleted,
-            failed_count: failed,
-            duration_ms: durationMs,
-            notes: finalNotes,
-          })
-          .eq("id", cleanupRunId);
+    try {
+      const updateQuery = supabase.from("cleanup_runs").update({
+        status: finalStatus,
+        scanned_count: scannedCount,
+        deleted_count: deleted,
+        failed_count: failed,
+        duration_ms: durationMs,
+        notes: finalNotes,
+      });
 
-        if (auditError) {
-          console.error("Failed to update cleanup run audit", auditError);
-        }
-      } catch (auditError) {
+      if (cleanupRunId) {
+        updateQuery.eq("id", cleanupRunId);
+      } else {
+        updateQuery
+          .eq("status", "running")
+          .eq("run_at", runAt)
+          .eq("trigger_source", triggerSource);
+      }
+
+      const { error: auditError } = await updateQuery;
+
+      if (auditError) {
         console.error("Failed to update cleanup run audit", auditError);
       }
+    } catch (auditError) {
+      console.error("Failed to update cleanup run audit", auditError);
     }
   }
+
+  return NextResponse.json(responseBody, { status: responseStatus });
 }

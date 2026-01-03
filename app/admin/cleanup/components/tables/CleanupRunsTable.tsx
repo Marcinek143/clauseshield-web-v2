@@ -189,7 +189,7 @@ export default function CleanupRunsTable({
               ) : (
                 <Link
                   className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
-                  href={`/admin/cleanup?page=${page - 1}`}
+                  href={`/admin/cleanup?tab=runs&page=${page - 1}`}
                 >
                   <span className="sr-only">Previous</span>
                   <span className="material-symbols-outlined text-[20px]">
@@ -213,7 +213,7 @@ export default function CleanupRunsTable({
                           ? "relative z-10 inline-flex items-center bg-primary px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                           : "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:text-slate-200 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
                       }
-                      href={`/admin/cleanup?page=${pageNumber}`}
+                      href={`/admin/cleanup?tab=runs&page=${pageNumber}`}
                       aria-current={pageNumber === page ? "page" : undefined}
                     >
                       {pageNumber}
@@ -234,7 +234,7 @@ export default function CleanupRunsTable({
               ) : (
                 <Link
                   className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
-                  href={`/admin/cleanup?page=${page + 1}`}
+                  href={`/admin/cleanup?tab=runs&page=${page + 1}`}
                 >
                   <span className="sr-only">Next</span>
                   <span className="material-symbols-outlined text-[20px]">

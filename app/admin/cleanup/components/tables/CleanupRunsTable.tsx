@@ -50,9 +50,8 @@ export default function CleanupRunsTable({
 
   function goToPage(nextPage: number) {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("tab", "runs");
     params.set("page", String(nextPage));
-    router.push(`/admin/cleanup?${params.toString()}`, { scroll: false });
+    router.push(`?${params.toString()}`);
   }
 
   const pages =

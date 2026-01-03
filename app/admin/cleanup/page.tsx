@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import CleanupHeader from "./components/CleanupHeader";
 import KPICards from "./components/KPICards";
 import HealthBanner from "./components/HealthBanner";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 type Persona = "founder" | "finance" | "legal";
@@ -60,21 +60,17 @@ const normalizePersona = (value: string | null): Persona => {
 export default function RequestDemoClient() {
   const searchParams = useSearchParams();
   const personaParam = searchParams.get("persona");
-  const [persona, setPersona] = useState<Persona>(() =>
-    normalizePersona(personaParam),
+  const normalizedParam = useMemo(
+    () => normalizePersona(personaParam),
+    [personaParam],
   );
-  const [role, setRole] = useState<string>(
-    roleByPersona[normalizePersona(personaParam)],
-  );
+  const [persona, setPersona] = useState<Persona>(normalizedParam);
+  const [role, setRole] = useState<string>(roleByPersona[normalizedParam]);
 
   useEffect(() => {
-    const nextPersona = normalizePersona(personaParam);
-    setPersona(nextPersona);
-  }, [personaParam]);
-
-  useEffect(() => {
-    setRole(roleByPersona[persona]);
-  }, [persona]);
+    setPersona(normalizedParam);
+    setRole(roleByPersona[normalizedParam]);
+  }, [normalizedParam]);
 
   const content = personaContent[persona];
 
@@ -92,14 +88,17 @@ export default function RequestDemoClient() {
                     : inactivePersonaLabel
                 }`}
               >
-                <input
-                  checked={persona === option.value}
-                  className="hidden"
-                  name="persona"
-                  type="radio"
-                  value={option.value}
-                  onChange={() => setPersona(option.value)}
-                />
+                  <input
+                    checked={persona === option.value}
+                    className="hidden"
+                    name="persona"
+                    type="radio"
+                    value={option.value}
+                    onChange={() => {
+                      setPersona(option.value);
+                      setRole(roleByPersona[option.value]);
+                    }}
+                  />
                 {option.label}
               </label>
             ))}

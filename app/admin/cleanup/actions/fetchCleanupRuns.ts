@@ -1,4 +1,5 @@
 import { supabaseServer } from "@/lib/supabaseServer";
+import { unstable_noStore as noStore } from "next/cache";
 
 export type CleanupRunRow = {
   id: string;
@@ -22,6 +23,7 @@ export async function fetchCleanupRuns(
   page: number,
   pageSize: number,
 ): Promise<CleanupRunsResult> {
+  noStore();
   const safePage = Number.isFinite(page) && page > 0 ? page : 1;
   const safePageSize =
     Number.isFinite(pageSize) && pageSize > 0 ? pageSize : 5;

@@ -40,8 +40,8 @@ export async function fetchCleanupRuns(
           "id, run_at, scanned_count, deleted_count, failed_count, duration_ms, trigger_source, notes",
           { count: "exact" },
         )
-        .range(from, to)
-        .order("run_at", { ascending: false });
+        .order("run_at", { ascending: false })
+        .range(from, to);
     };
 
     const firstPass = await fetchPage(safePage);

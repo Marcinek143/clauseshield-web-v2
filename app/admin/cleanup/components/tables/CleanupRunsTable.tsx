@@ -40,6 +40,12 @@ export default function CleanupRunsTable({
   page,
   pageSize,
 }: CleanupRunsTableProps) {
+  console.log("TABLE PROPS", {
+    page,
+    runsLength: runs.length,
+    firstId: runs[0]?.id,
+  });
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const totalPages = Math.ceil(totalCount / pageSize);

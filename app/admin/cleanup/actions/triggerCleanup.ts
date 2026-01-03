@@ -3,9 +3,12 @@
 import { headers } from "next/headers";
 
 export type TriggerCleanupResult = {
-  success: boolean;
+  ok: true;
   deleted: number;
   failed: number;
+} | {
+  ok: false;
+  reason: "already_running";
 };
 
 export async function triggerCleanup(): Promise<TriggerCleanupResult> {
@@ -33,10 +36,25 @@ export async function triggerCleanup(): Promise<TriggerCleanupResult> {
     cache: "no-store",
   });
 
-  if (!response.ok) {
+  if (response.status === 409) {
+    return { ok: false, reason: "already_running" };
+  }
+
+  if (response.ok) {
+    const data = (await response.json()) as {
+      deleted?: number;
+      failed?: number;
+    };
+    return {
+      ok: true,
+      deleted: data.deleted ?? 0,
+      failed: data.failed ?? 0,
+    };
+  }
+
+  if (response.status >= 500) {
     throw new Error(`Cleanup failed with status ${response.status}`);
   }
 
-  const data = (await response.json()) as TriggerCleanupResult;
-  return data;
+  throw new Error(`Unexpected cleanup response status ${response.status}`);
 }

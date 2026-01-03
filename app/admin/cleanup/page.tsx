@@ -100,7 +100,7 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
           <div className="layout-content-container flex flex-col max-w-[1200px] flex-1 gap-8">
             <CleanupHeader
               status={stats.health.status}
-              action={<TriggerCleanupButton />}
+              action={<TriggerCleanupButton isRunning={stats.isRunning} />}
             />
             <KPICards stats={stats} />
             <HealthBanner

@@ -19,6 +19,7 @@ export type CleanupStats = {
   deleted24h: number;
   failures24h: number;
   avgDurationMs: number | null;
+  isRunning: boolean;
   health: {
     status: CleanupHealthStatus;
     title: string;
@@ -72,6 +73,16 @@ export async function fetchCleanupStats(): Promise<CleanupStats> {
       throw recentRunsError;
     }
 
+    const { data: runningRuns, error: runningError } = await supabase
+      .from("cleanup_runs")
+      .select("id")
+      .eq("status", "running")
+      .limit(1);
+
+    if (runningError) {
+      throw runningError;
+    }
+
     const totals = (recentRuns ?? []).reduce(
       (accumulator, run) => {
         accumulator.scanned += run.scanned_count ?? 0;
@@ -109,6 +120,7 @@ export async function fetchCleanupStats(): Promise<CleanupStats> {
       deleted24h: totals.deleted,
       failures24h: totals.failures,
       avgDurationMs,
+      isRunning: (runningRuns?.length ?? 0) > 0,
       health: {
         status,
         ...HEALTH_CONTENT[status],
@@ -122,6 +134,7 @@ export async function fetchCleanupStats(): Promise<CleanupStats> {
       deleted24h: 0,
       failures24h: 0,
       avgDurationMs: null,
+      isRunning: false,
       health: {
         status: "critical",
         ...HEALTH_CONTENT.critical,

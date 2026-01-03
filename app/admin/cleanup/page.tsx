@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 import CleanupHeader from "./components/CleanupHeader";
 import KPICards from "./components/KPICards";

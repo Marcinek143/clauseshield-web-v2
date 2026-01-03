@@ -52,7 +52,7 @@ export default function CleanupRunsTable({
     const params = new URLSearchParams(searchParams.toString());
     params.set("tab", "runs");
     params.set("page", String(nextPage));
-    router.push(`/admin/cleanup?${params.toString()}`);
+    router.push(`/admin/cleanup?${params.toString()}`, { scroll: false });
   }
 
   const pages =

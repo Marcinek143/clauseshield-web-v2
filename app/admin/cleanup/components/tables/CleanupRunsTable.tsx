@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formatDateTime, formatDuration, formatNumber } from "../../utils";
 import type {
   CleanupRunRow,
@@ -58,7 +58,9 @@ export default function CleanupRunsTable({
     pageSize,
   }));
 
+  const router = useRouter();
   const searchParams = useSearchParams();
+  const activeTab = searchParams.get("tab") ?? "runs";
   const currentPage = Number(searchParams.get("page") ?? String(page));
   const safeCurrentPage =
     Number.isFinite(currentPage) && currentPage > 0 ? currentPage : 1;
@@ -157,6 +159,9 @@ export default function CleanupRunsTable({
           <button
             className="p-2 text-[#4c639a] hover:text-primary dark:text-slate-400 dark:hover:text-blue-400 transition-colors"
             type="button"
+            onClick={() => {
+              console.log(`Filter placeholder for ${activeTab}`);
+            }}
           >
             <span className="material-symbols-outlined text-[20px]">
               filter_list
@@ -165,6 +170,9 @@ export default function CleanupRunsTable({
           <button
             className="p-2 text-[#4c639a] hover:text-primary dark:text-slate-400 dark:hover:text-blue-400 transition-colors"
             type="button"
+            onClick={() => {
+              router.push(`/admin/cleanup/export?tab=${activeTab}`);
+            }}
           >
             <span className="material-symbols-outlined text-[20px]">download</span>
           </button>
@@ -216,7 +224,9 @@ export default function CleanupRunsTable({
                     {formatDateTime(run.run_at)}
                   </td>
                   <td className="px-6 py-4 text-[#4c639a] dark:text-slate-400">
-                    {formatDuration(run.duration_ms)}
+                    {run.duration_ms
+                      ? formatDuration(run.duration_ms)
+                      : "—"}
                   </td>
                   <td className="px-6 py-4 text-[#0d121b] dark:text-slate-100">
                     {formatNumber(run.scanned_count ?? 0)}

@@ -1,4 +1,6 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
 
 export type CleanupTabKey = "runs" | "files" | "retention";
 
@@ -11,6 +13,8 @@ const TAB_BASE_CLASS =
   "group inline-flex items-center border-b-2 py-4 px-1 text-sm";
 
 export default function CleanupTabs({ activeTab, fileCount }: CleanupTabsProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const tabs: Array<{
     key: CleanupTabKey;
     label: string;
@@ -32,17 +36,28 @@ export default function CleanupTabs({ activeTab, fileCount }: CleanupTabsProps) 
             const className = isActive
               ? `${TAB_BASE_CLASS} border-primary text-primary dark:border-primary/80 dark:text-blue-400 font-bold`
               : `${TAB_BASE_CLASS} border-transparent text-[#4c639a] hover:border-gray-300 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200 font-medium`;
-            const href =
-              tab.key === "runs"
-                ? "/admin/cleanup"
-                : { pathname: "/admin/cleanup", query: { tab: tab.key } };
+            const handleClick = () => {
+              const params = new URLSearchParams(searchParams.toString());
+              if (tab.key === "runs") {
+                params.delete("tab");
+              } else {
+                params.set("tab", tab.key);
+              }
+              const queryString = params.toString();
+              router.push(
+                queryString
+                  ? `/admin/cleanup?${queryString}`
+                  : "/admin/cleanup",
+              );
+            };
 
             return (
-              <Link
+              <button
                 key={tab.key}
-                href={href}
                 aria-current={isActive ? "page" : undefined}
                 className={className}
+                onClick={handleClick}
+                type="button"
               >
                 <span className="material-symbols-outlined mr-2 text-[20px]">
                   {tab.icon}
@@ -53,7 +68,7 @@ export default function CleanupTabs({ activeTab, fileCount }: CleanupTabsProps) 
                     {fileCount}
                   </span>
                 ) : null}
-              </Link>
+              </button>
             );
           })}
         </nav>

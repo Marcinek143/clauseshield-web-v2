@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formatDateTime, formatDuration, formatNumber } from "../../utils";
 import type { CleanupRunRow } from "../../actions/fetchCleanupRuns";
 
@@ -48,11 +49,17 @@ export default function CleanupRunsTable({
   });
 
   const searchParams = useSearchParams();
+  const router = useRouter();
   const totalPages = Math.ceil(totalCount / pageSize);
   const from = totalCount === 0 ? 0 : (page - 1) * pageSize + 1;
   const to = totalCount === 0 ? 0 : from + runs.length - 1;
   const isPrevDisabled = page <= 1;
   const isNextDisabled = totalPages === 0 || page >= totalPages;
+  const searchKey = searchParams.toString();
+
+  useEffect(() => {
+    router.refresh();
+  }, [router, searchKey]);
 
   function buildPageHref(nextPage: number) {
     const params = new URLSearchParams(searchParams.toString());

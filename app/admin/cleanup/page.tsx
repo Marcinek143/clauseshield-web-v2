@@ -1,5 +1,7 @@
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
+import { unstable_noStore as noStore } from "next/cache";
 import CleanupHeader from "./components/CleanupHeader";
 import KPICards from "./components/KPICards";
 import HealthBanner from "./components/HealthBanner";
@@ -31,6 +33,7 @@ type CleanupPageProps = {
 };
 
 export default async function CleanupPage({ searchParams }: CleanupPageProps) {
+  noStore();
   const tab = searchParams?.tab ?? "runs";
   const page = Math.max(1, Number(searchParams?.page ?? "1") || 1);
   const pageSize = PAGE_SIZE;

@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { formatDateTime, formatDuration, formatNumber } from "../../utils";
 import type { CleanupRunRow } from "../../actions/fetchCleanupRuns";
 
@@ -46,7 +47,6 @@ export default function CleanupRunsTable({
     firstId: runs[0]?.id,
   });
 
-  const router = useRouter();
   const searchParams = useSearchParams();
   const totalPages = Math.ceil(totalCount / pageSize);
   const from = totalCount === 0 ? 0 : (page - 1) * pageSize + 1;
@@ -54,10 +54,10 @@ export default function CleanupRunsTable({
   const isPrevDisabled = page <= 1;
   const isNextDisabled = totalPages === 0 || page >= totalPages;
 
-  function goToPage(nextPage: number) {
+  function buildPageHref(nextPage: number) {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(nextPage));
-    router.push(`/admin/cleanup?${params.toString()}`);
+    return `/admin/cleanup?${params.toString()}`;
   }
 
   const pages =
@@ -203,16 +203,15 @@ export default function CleanupRunsTable({
                   </span>
                 </span>
               ) : (
-                <button
+                <Link
                   className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
-                  onClick={() => goToPage(page - 1)}
-                  type="button"
+                  href={buildPageHref(page - 1)}
                 >
                   <span className="sr-only">Previous</span>
                   <span className="material-symbols-outlined text-[20px]">
                     chevron_left
                   </span>
-                </button>
+                </Link>
               )}
               {pages.map((pageNumber, index) => {
                 const previous = pages[index - 1];
@@ -224,17 +223,16 @@ export default function CleanupRunsTable({
                         ...
                       </span>
                     ) : null}
-                    <button
+                    <Link
                       className={
                         pageNumber === page
                           ? "relative z-10 inline-flex items-center bg-primary px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                           : "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:text-slate-200 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
                       }
-                      onClick={() => goToPage(pageNumber)}
-                      type="button"
+                      href={buildPageHref(pageNumber)}
                     >
                       {pageNumber}
-                    </button>
+                    </Link>
                   </span>
                 );
               })}
@@ -249,16 +247,15 @@ export default function CleanupRunsTable({
                   </span>
                 </span>
               ) : (
-                <button
+                <Link
                   className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
-                  onClick={() => goToPage(page + 1)}
-                  type="button"
+                  href={buildPageHref(page + 1)}
                 >
                   <span className="sr-only">Next</span>
                   <span className="material-symbols-outlined text-[20px]">
                     chevron_right
                   </span>
-                </button>
+                </Link>
               )}
             </nav>
           </div>

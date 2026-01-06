@@ -38,6 +38,7 @@ export default function CleanupTabs({ activeTab, fileCount }: CleanupTabsProps) 
               : `${TAB_BASE_CLASS} border-transparent text-[#4c639a] hover:border-gray-300 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200 font-medium`;
             const handleClick = () => {
               const params = new URLSearchParams(searchParams.toString());
+              params.delete("page");
               if (tab.key === "runs") {
                 params.delete("tab");
               } else {

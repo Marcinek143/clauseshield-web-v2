@@ -1,10 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { formatDateTime, formatDuration, formatNumber } from "../../utils";
-import type { CleanupRunRow } from "../../actions/fetchCleanupRuns";
+import type {
+  CleanupRunRow,
+  CleanupRunsResult,
+} from "../../actions/fetchCleanupRuns";
 
 // Dark mode table surfaces follow Stitch: soft separators and low-contrast rows.
 type CleanupRunsTableProps = {
@@ -48,18 +51,78 @@ export default function CleanupRunsTable({
     firstId: runs[0]?.id,
   });
 
+  const [tableState, setTableState] = useState<CleanupRunsResult>(() => ({
+    runs,
+    totalCount,
+    page,
+    pageSize,
+  }));
+
   const searchParams = useSearchParams();
-  const router = useRouter();
-  const totalPages = Math.ceil(totalCount / pageSize);
-  const from = totalCount === 0 ? 0 : (page - 1) * pageSize + 1;
-  const to = totalCount === 0 ? 0 : from + runs.length - 1;
-  const isPrevDisabled = page <= 1;
-  const isNextDisabled = totalPages === 0 || page >= totalPages;
-  const searchKey = searchParams.toString();
+  const currentPage = Number(searchParams.get("page") ?? String(page));
+  const safeCurrentPage =
+    Number.isFinite(currentPage) && currentPage > 0 ? currentPage : 1;
 
   useEffect(() => {
-    router.refresh();
-  }, [router, searchKey]);
+    setTableState({
+      runs,
+      totalCount,
+      page,
+      pageSize,
+    });
+  }, [runs, totalCount, page, pageSize]);
+
+  useEffect(() => {
+    if (safeCurrentPage === tableState.page) {
+      return;
+    }
+
+    const controller = new AbortController();
+    let isActive = true;
+
+    const loadRuns = async () => {
+      try {
+        const response = await fetch(
+          `/api/cleanup/runs?page=${safeCurrentPage}&pageSize=${tableState.pageSize}`,
+          { signal: controller.signal, cache: "no-store" },
+        );
+        if (!response.ok) {
+          throw new Error(`Failed to fetch cleanup runs: ${response.status}`);
+        }
+        const data = (await response.json()) as CleanupRunsResult;
+        if (isActive) {
+          setTableState(data);
+        }
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") {
+          return;
+        }
+        console.error("Failed to fetch cleanup runs", error);
+      }
+    };
+
+    loadRuns();
+
+    return () => {
+      isActive = false;
+      controller.abort();
+    };
+  }, [safeCurrentPage, tableState.page, tableState.pageSize]);
+
+  const totalPages = Math.ceil(
+    tableState.totalCount / tableState.pageSize,
+  );
+  const from =
+    tableState.totalCount === 0
+      ? 0
+      : (tableState.page - 1) * tableState.pageSize + 1;
+  const to =
+    tableState.totalCount === 0
+      ? 0
+      : from + tableState.runs.length - 1;
+  const isPrevDisabled = tableState.page <= 1;
+  const isNextDisabled =
+    totalPages === 0 || tableState.page >= totalPages;
 
   function buildPageHref(nextPage: number) {
     const params = new URLSearchParams(searchParams.toString());
@@ -71,7 +134,13 @@ export default function CleanupRunsTable({
     totalPages > 0
       ? Array.from(
           new Set(
-            [1, page - 1, page, page + 1, totalPages].filter(
+            [
+              1,
+              tableState.page - 1,
+              tableState.page,
+              tableState.page + 1,
+              totalPages,
+            ].filter(
               (value) => value >= 1 && value <= totalPages,
             ),
           ),
@@ -126,7 +195,7 @@ export default function CleanupRunsTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-[#e7ebf3] dark:divide-navy-700/60">
-            {runs.map((run) => {
+            {tableState.runs.map((run) => {
               const status = getStatusStyles(run.failed_count);
               return (
                 <tr
@@ -165,7 +234,7 @@ export default function CleanupRunsTable({
                 </tr>
               );
             })}
-            {runs.length === 0 ? (
+            {tableState.runs.length === 0 ? (
               <tr>
                 <td
                   className="px-6 py-8 text-center text-[#4c639a] dark:text-slate-400"
@@ -192,7 +261,7 @@ export default function CleanupRunsTable({
               </span>{" "}
               of{" "}
               <span className="font-medium text-[#0d121b] dark:text-slate-100">
-                {totalCount}
+                {tableState.totalCount}
               </span>{" "}
               results
             </p>
@@ -212,7 +281,7 @@ export default function CleanupRunsTable({
               ) : (
                 <Link
                   className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
-                  href={buildPageHref(page - 1)}
+                  href={buildPageHref(tableState.page - 1)}
                 >
                   <span className="sr-only">Previous</span>
                   <span className="material-symbols-outlined text-[20px]">
@@ -232,7 +301,7 @@ export default function CleanupRunsTable({
                     ) : null}
                     <Link
                       className={
-                        pageNumber === page
+                        pageNumber === tableState.page
                           ? "relative z-10 inline-flex items-center bg-primary px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                           : "relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:text-slate-200 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
                       }
@@ -256,7 +325,7 @@ export default function CleanupRunsTable({
               ) : (
                 <Link
                   className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 dark:ring-navy-700/70 dark:hover:bg-navy-700/60"
-                  href={buildPageHref(page + 1)}
+                  href={buildPageHref(tableState.page + 1)}
                 >
                   <span className="sr-only">Next</span>
                   <span className="material-symbols-outlined text-[20px]">

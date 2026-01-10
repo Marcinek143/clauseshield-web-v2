@@ -6,13 +6,16 @@ export type CleanupTabKey = "runs" | "files" | "retention";
 
 type CleanupTabsProps = {
   activeTab: CleanupTabKey;
-  fileCount: number;
+  expiredCount: number;
 };
 
 const TAB_BASE_CLASS =
   "group inline-flex items-center border-b-2 py-4 px-1 text-sm";
 
-export default function CleanupTabs({ activeTab, fileCount }: CleanupTabsProps) {
+export default function CleanupTabs({
+  activeTab,
+  expiredCount,
+}: CleanupTabsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tabs: Array<{
@@ -66,7 +69,7 @@ export default function CleanupTabs({ activeTab, fileCount }: CleanupTabsProps) 
                 {tab.label}
                 {tab.showCount ? (
                   <span className="ml-2 hidden rounded-full bg-gray-100 py-0.5 px-2.5 text-xs font-medium text-gray-900 dark:bg-navy-800/80 dark:text-slate-200 md:inline-block">
-                    {fileCount}
+                    {expiredCount}
                   </span>
                 ) : null}
               </button>

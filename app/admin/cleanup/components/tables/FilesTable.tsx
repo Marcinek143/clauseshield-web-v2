@@ -1,10 +1,10 @@
 import { formatDateTime } from "../../utils";
-import type { FileIssueRow } from "../../actions/fetchFileIssues";
+import type { CleanupFileRow } from "../../actions/fetchCleanupFiles";
 
 // Dark mode table styling matches Stitch with subdued row dividers.
 type FilesTableProps = {
-  issues: FileIssueRow[];
-  totalIssues: number;
+  files: CleanupFileRow[];
+  totalCount: number;
 };
 
 function formatRunId(id: string | null) {
@@ -12,13 +12,14 @@ function formatRunId(id: string | null) {
   return id.startsWith("#") ? id : `#${id}`;
 }
 
-function getFileStatus(row: FileIssueRow) {
+function getFileStatus(row: CleanupFileRow, now: Date) {
   const isExpired = row.expires_at
-    ? new Date(row.expires_at) < new Date()
+    ? new Date(row.expires_at) < now
     : false;
 
-  if (isExpired) {
+  if (isExpired && row.status !== "deleted") {
     return {
+      isExpired: true,
       label: "Expired",
       badge:
         "bg-amber-50 text-amber-700 ring-amber-600/20 dark:bg-amber-500/15 dark:text-amber-300 dark:ring-amber-500/30",
@@ -27,6 +28,7 @@ function getFileStatus(row: FileIssueRow) {
 
   if (row.status === "deleted") {
     return {
+      isExpired: false,
       label: "Deleted",
       badge:
         "bg-green-50 text-green-700 ring-green-600/20 dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-emerald-500/30",
@@ -34,21 +36,24 @@ function getFileStatus(row: FileIssueRow) {
   }
 
   return {
+    isExpired: false,
     label: row.status ?? "Unknown",
     badge:
       "bg-gray-100 text-gray-700 ring-gray-300 dark:bg-navy-700/60 dark:text-slate-200 dark:ring-navy-700/70",
   };
 }
 
-export default function FilesTable({ issues, totalIssues }: FilesTableProps) {
+export default function FilesTable({ files, totalCount }: FilesTableProps) {
+  const now = new Date();
+
   return (
     <div className="rounded-xl border border-[#cfd6e7] dark:border-navy-700/70 bg-white dark:bg-navy-800/70 overflow-hidden shadow-sm dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
       <div className="flex items-center justify-between p-4 border-b border-[#cfd6e7] dark:border-navy-700/60">
         <h3 className="text-base font-bold text-[#0d121b] dark:text-slate-100">
-          Expired Files
+          Files
         </h3>
         <p className="text-sm text-[#4c639a] dark:text-slate-400">
-          {totalIssues} flagged
+          {totalCount} total
         </p>
       </div>
       <div className="overflow-x-auto">
@@ -56,41 +61,47 @@ export default function FilesTable({ issues, totalIssues }: FilesTableProps) {
           <thead className="bg-[#f8f9fc] dark:bg-navy-900/60 text-[#4c639a] dark:text-slate-400 font-medium uppercase tracking-wider text-xs">
             <tr>
               <th className="px-6 py-4" scope="col">
-                File Path
+                File ID
               </th>
               <th className="px-6 py-4" scope="col">
-                Type
+                Bucket
+              </th>
+              <th className="px-6 py-4" scope="col">
+                Path
               </th>
               <th className="px-6 py-4" scope="col">
                 Status
               </th>
               <th className="px-6 py-4" scope="col">
-                Uploaded
+                Expires At
               </th>
               <th className="px-6 py-4" scope="col">
-                Expires
+                Deleted At
               </th>
               <th className="px-6 py-4" scope="col">
-                Cleanup Run
-              </th>
-              <th className="px-6 py-4 text-right" scope="col">
-                Actions
+                Cleanup Run ID
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#e7ebf3] dark:divide-navy-700/60">
-            {issues.map((issue) => {
-              const status = getFileStatus(issue);
+            {files.map((file) => {
+              const status = getFileStatus(file, now);
+              const rowClass = status.isExpired
+                ? "bg-amber-50/60 dark:bg-amber-500/10 hover:bg-amber-50 dark:hover:bg-amber-500/15"
+                : "hover:bg-gray-50 dark:hover:bg-navy-800/70";
               return (
                 <tr
-                  key={issue.id}
-                  className="hover:bg-gray-50 dark:hover:bg-navy-800/70 transition-colors"
+                  key={file.id}
+                  className={`${rowClass} transition-colors`}
                 >
                   <td className="px-6 py-4 font-medium text-primary cursor-pointer hover:underline">
-                    {issue.storage_path ?? "-"}
+                    {file.id}
                   </td>
                   <td className="px-6 py-4 text-[#0d121b] dark:text-slate-100">
-                    {issue.kind ?? "-"}
+                    {file.bucket ?? "-"}
+                  </td>
+                  <td className="px-6 py-4 text-[#0d121b] dark:text-slate-100">
+                    {file.storage_path ?? "-"}
                   </td>
                   <td className="px-6 py-4">
                     <span
@@ -100,34 +111,24 @@ export default function FilesTable({ issues, totalIssues }: FilesTableProps) {
                     </span>
                   </td>
                   <td className="px-6 py-4 text-[#4c639a] dark:text-slate-400">
-                    {formatDateTime(issue.uploaded_at)}
+                    {formatDateTime(file.expires_at)}
                   </td>
                   <td className="px-6 py-4 text-[#4c639a] dark:text-slate-400">
-                    {formatDateTime(issue.expires_at)}
+                    {formatDateTime(file.deleted_at)}
                   </td>
                   <td className="px-6 py-4 text-[#0d121b] dark:text-slate-100">
-                    {formatRunId(issue.cleanup_run_id)}
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <button
-                      className="text-[#4c639a] hover:text-primary dark:text-slate-400 dark:hover:text-blue-400"
-                      type="button"
-                    >
-                      <span className="material-symbols-outlined text-[20px]">
-                        arrow_forward
-                      </span>
-                    </button>
+                    {formatRunId(file.cleanup_run_id)}
                   </td>
                 </tr>
               );
             })}
-            {issues.length === 0 ? (
+            {files.length === 0 ? (
               <tr>
                 <td
                   className="px-6 py-8 text-center text-[#4c639a] dark:text-slate-400"
                   colSpan={7}
                 >
-                  No expired files detected.
+                  No files with expiration timestamps detected.
                 </td>
               </tr>
             ) : null}

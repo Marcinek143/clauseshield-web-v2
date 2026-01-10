@@ -14,6 +14,7 @@ import RetentionTable from "./components/tables/RetentionTable";
 import { fetchCleanupStats } from "./actions/fetchCleanupStats";
 import { fetchCleanupRuns } from "./actions/fetchCleanupRuns";
 import { fetchFileIssues } from "./actions/fetchFileIssues";
+import { fetchCleanupFiles } from "./actions/fetchCleanupFiles";
 import type { CleanupTabKey } from "./components/CleanupTabs";
 import ThemeToggle from "@/components/layout/ThemeToggle";
 
@@ -46,7 +47,16 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
   });
 
   const statsPromise = fetchCleanupStats();
-  const fileIssuesPromise = fetchFileIssues();
+  const cleanupFilesPromise = fetchCleanupFiles();
+  const fileIssuesPromise =
+    activeTab === "retention"
+      ? fetchFileIssues()
+      : Promise.resolve({
+          issues: [],
+          totalIssues: 0,
+          retentionGroups: [],
+          retentionSampled: 0,
+        });
   const runsPromise =
     activeTab === "runs"
       ? fetchCleanupRuns(page, pageSize)
@@ -57,8 +67,9 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
           pageSize,
         });
 
-  const [stats, fileIssues, runsResult] = await Promise.all([
+  const [stats, cleanupFiles, fileIssues, runsResult] = await Promise.all([
     statsPromise,
+    cleanupFilesPromise,
     fileIssuesPromise,
     runsPromise,
   ]);
@@ -123,7 +134,7 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
             <div className="flex flex-col gap-4">
               <CleanupTabs
                 activeTab={activeTab}
-                fileCount={fileIssues.totalIssues}
+                expiredCount={cleanupFiles.expiredCount}
               />
               {activeTab === "runs" ? (
                 <CleanupRunsTable
@@ -135,8 +146,8 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
               ) : null}
               {activeTab === "files" ? (
                 <FilesTable
-                  issues={fileIssues.issues}
-                  totalIssues={fileIssues.totalIssues}
+                  files={cleanupFiles.files}
+                  totalCount={cleanupFiles.totalCount}
                 />
               ) : null}
               {activeTab === "retention" ? (

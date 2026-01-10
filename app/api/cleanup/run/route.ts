@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 
 import { supabaseServer } from "@/lib/supabaseServer";
 
-import { executeCleanup, resolveTriggerSource } from "./cleanupRunner";
+import { executeCleanup } from "../cleanupRunner";
 
 export const runtime = "nodejs";
 
-export async function POST(request: Request) {
-  const secret = request.headers.get("x-cleanup-secret");
-  if (!secret || secret !== process.env.CLEANUP_SECRET) {
+export async function GET(request: Request) {
+  const cronHeader = request.headers.get("x-vercel-cron");
+  if (!cronHeader) {
     return NextResponse.json({ success: false }, { status: 401 });
   }
 
@@ -20,18 +20,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false }, { status: 500 });
   }
 
-  const url = new URL(request.url);
-  const requestedTrigger =
-    request.headers.get("x-cleanup-source") ??
-    request.headers.get("x-trigger-source") ??
-    url.searchParams.get("trigger_source") ??
-    url.searchParams.get("source") ??
-    "";
-  const triggerSource = resolveTriggerSource(requestedTrigger);
-
   const { responseBody, responseStatus } = await executeCleanup({
     supabase,
-    triggerSource,
+    triggerSource: "vercel-cron",
   });
 
   return NextResponse.json(responseBody, { status: responseStatus });

@@ -68,18 +68,12 @@ export async function executeCleanup({
         ? new Date(staleRun.run_at).getTime()
         : startTime;
       const runAtMs = Number.isNaN(parsedRunAt) ? startTime : parsedRunAt;
-      // duration_ms is stored as seconds here to satisfy the stale-lock requirement.
-      const durationSeconds = Math.max(
-        0,
-        Math.floor((startTime - runAtMs) / 1000),
-      );
-
       const { error: staleUpdateError } = await supabase
         .from("cleanup_runs")
         .update({
           status: "failed",
           notes: "auto-failed: stale lock",
-          duration_ms: durationSeconds,
+          duration_ms: null,
         })
         .eq("id", staleRun.id);
 

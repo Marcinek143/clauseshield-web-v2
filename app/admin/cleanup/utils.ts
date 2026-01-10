@@ -35,6 +35,10 @@ export function formatDuration(durationMs: number | null | undefined): string {
   if (!durationMs && durationMs !== 0) {
     return "-";
   }
+  const maxDurationMs = 10 * 60 * 1000;
+  if (durationMs > maxDurationMs) {
+    return "-";
+  }
   const totalSeconds = Math.round(durationMs / 1000);
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;

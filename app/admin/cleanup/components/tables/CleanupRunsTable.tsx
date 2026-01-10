@@ -224,9 +224,7 @@ export default function CleanupRunsTable({
                     {formatDateTime(run.run_at)}
                   </td>
                   <td className="px-6 py-4 text-[#4c639a] dark:text-slate-400">
-                    {run.duration_ms
-                      ? formatDuration(run.duration_ms)
-                      : "—"}
+                    {formatDuration(run.duration_ms)}
                   </td>
                   <td className="px-6 py-4 text-[#0d121b] dark:text-slate-100">
                     {formatNumber(run.scanned_count ?? 0)}

@@ -21,7 +21,9 @@ export default function CleanupTabs({
   const goToTab = (tab: CleanupTabKey) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("tab", tab);
+    params.delete("page");
     router.push(`/admin/cleanup?${params.toString()}`);
+    router.refresh();
   };
   const tabs: Array<{
     key: CleanupTabKey;

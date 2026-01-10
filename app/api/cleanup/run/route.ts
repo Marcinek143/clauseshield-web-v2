@@ -8,7 +8,7 @@ export const runtime = "nodejs";
 
 export async function GET(request: Request) {
   const cronHeader = request.headers.get("x-vercel-cron");
-  if (!cronHeader) {
+  if (cronHeader === null) {
     return NextResponse.json({ success: false }, { status: 401 });
   }
 

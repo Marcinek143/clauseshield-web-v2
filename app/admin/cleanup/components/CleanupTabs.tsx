@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export type CleanupTabKey = "runs" | "files" | "retention";
 
@@ -16,14 +17,12 @@ export default function CleanupTabs({
   activeTab,
   expiredCount,
 }: CleanupTabsProps) {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const goToTab = (tab: CleanupTabKey) => {
+  const buildHref = (tab: CleanupTabKey) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("tab", tab);
     params.delete("page");
-    router.push(`/admin/cleanup?${params.toString()}`);
-    router.refresh();
+    return `/admin/cleanup?${params.toString()}`;
   };
   const tabs: Array<{
     key: CleanupTabKey;
@@ -47,12 +46,11 @@ export default function CleanupTabs({
               ? `${TAB_BASE_CLASS} border-primary text-primary dark:border-primary/80 dark:text-blue-400 font-bold`
               : `${TAB_BASE_CLASS} border-transparent text-[#4c639a] hover:border-gray-300 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200 font-medium`;
             return (
-              <button
+              <Link
                 key={tab.key}
                 aria-current={isActive ? "page" : undefined}
                 className={className}
-                onClick={() => goToTab(tab.key)}
-                type="button"
+                href={buildHref(tab.key)}
               >
                 <span className="material-symbols-outlined mr-2 text-[20px]">
                   {tab.icon}
@@ -63,7 +61,7 @@ export default function CleanupTabs({
                     {expiredCount}
                   </span>
                 ) : null}
-              </button>
+              </Link>
             );
           })}
         </nav>

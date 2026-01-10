@@ -27,17 +27,37 @@ function resolveTab(tab?: string): CleanupTabKey {
   return "runs";
 }
 
+type SearchParamValue = string | string[] | undefined;
+
+function readSearchParam(params: unknown, key: string): string | undefined {
+  if (!params) {
+    return undefined;
+  }
+  if (typeof (params as { get?: unknown }).get === "function") {
+    return (params as URLSearchParams).get(key) ?? undefined;
+  }
+  if (typeof params === "object") {
+    const value = (params as Record<string, SearchParamValue>)[key];
+    if (Array.isArray(value)) {
+      return value[0];
+    }
+    return value;
+  }
+  return undefined;
+}
+
 type CleanupPageProps = {
-  searchParams?: {
-    tab?: string;
-    page?: string;
-  };
+  searchParams?: Promise<unknown> | unknown;
 };
 
 export default async function CleanupPage({ searchParams }: CleanupPageProps) {
   noStore();
-  const tab = resolveTab(searchParams?.tab);
-  const page = Math.max(1, Number(searchParams?.page ?? "1") || 1);
+  const resolvedSearchParams = await Promise.resolve(searchParams);
+  const tab = resolveTab(readSearchParam(resolvedSearchParams, "tab"));
+  const page = Math.max(
+    1,
+    Number(readSearchParam(resolvedSearchParams, "page") ?? "1") || 1,
+  );
   const pageSize = PAGE_SIZE;
   const activeTab = tab;
 

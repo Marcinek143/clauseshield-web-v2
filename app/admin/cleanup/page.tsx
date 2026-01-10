@@ -36,10 +36,10 @@ type CleanupPageProps = {
 
 export default async function CleanupPage({ searchParams }: CleanupPageProps) {
   noStore();
-  const tab = searchParams?.tab ?? "runs";
+  const tab = resolveTab(searchParams?.tab);
   const page = Math.max(1, Number(searchParams?.page ?? "1") || 1);
   const pageSize = PAGE_SIZE;
-  const activeTab = resolveTab(tab);
+  const activeTab = tab;
 
   console.log("ADMIN CLEANUP PAGE", {
     page,

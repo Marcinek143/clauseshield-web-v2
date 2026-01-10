@@ -18,6 +18,11 @@ export default function CleanupTabs({
 }: CleanupTabsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const goToTab = (tab: CleanupTabKey) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", tab);
+    router.push(`/admin/cleanup?${params.toString()}`);
+  };
   const tabs: Array<{
     key: CleanupTabKey;
     label: string;
@@ -39,28 +44,12 @@ export default function CleanupTabs({
             const className = isActive
               ? `${TAB_BASE_CLASS} border-primary text-primary dark:border-primary/80 dark:text-blue-400 font-bold`
               : `${TAB_BASE_CLASS} border-transparent text-[#4c639a] hover:border-gray-300 hover:text-gray-700 dark:text-slate-400 dark:hover:text-slate-200 font-medium`;
-            const handleClick = () => {
-              const params = new URLSearchParams(searchParams.toString());
-              params.delete("page");
-              if (tab.key === "runs") {
-                params.delete("tab");
-              } else {
-                params.set("tab", tab.key);
-              }
-              const queryString = params.toString();
-              router.push(
-                queryString
-                  ? `/admin/cleanup?${queryString}`
-                  : "/admin/cleanup",
-              );
-            };
-
             return (
               <button
                 key={tab.key}
                 aria-current={isActive ? "page" : undefined}
                 className={className}
-                onClick={handleClick}
+                onClick={() => goToTab(tab.key)}
                 type="button"
               >
                 <span className="material-symbols-outlined mr-2 text-[20px]">

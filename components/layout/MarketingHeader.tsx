@@ -10,6 +10,7 @@ export default function MarketingHeader() {
   const isMarketingHome = pathname === "/";
   const isSolutionsPage = pathname.startsWith("/for-");
   const isRequestDemoPage = pathname === "/request-demo";
+  const isAnalyzePage = pathname === "/analyze";
 
   return (
     <header className="fixed top-0 z-50 w-full border-b border-slate-200 bg-background-light/80 backdrop-blur-xl dark:border-navy-800/70 dark:bg-navy-900/80">
@@ -70,13 +71,21 @@ export default function MarketingHeader() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Link
-            className="hidden sm:inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-900 transition-colors hover:bg-slate-50 dark:border-navy-700 dark:bg-navy-800 dark:text-slate-100 dark:hover:bg-navy-700"
+            className={`hidden sm:inline-flex h-10 items-center justify-center rounded-xl px-4 text-sm font-bold transition-all ${
+              isRequestDemoPage
+                ? "bg-primary text-white shadow-lg shadow-primary/20 hover:bg-primary-hover"
+                : "border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 dark:border-navy-700 dark:bg-navy-800 dark:text-slate-100 dark:hover:bg-navy-700"
+            }`}
             href="/request-demo"
           >
             Request Demo
           </Link>
           <Link
-            className="inline-flex h-10 items-center justify-center rounded-xl bg-primary px-4 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all hover:bg-primary-hover"
+            className={`inline-flex h-10 items-center justify-center rounded-xl px-4 text-sm font-bold transition-all ${
+              isAnalyzePage
+                ? "bg-primary text-white shadow-lg shadow-primary/20 hover:bg-primary-hover"
+                : "border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 dark:border-navy-700 dark:bg-navy-800 dark:text-slate-100 dark:hover:bg-navy-700"
+            }`}
             href="/analyze"
           >
             Get Started

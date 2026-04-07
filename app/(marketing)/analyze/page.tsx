@@ -21,9 +21,9 @@
 "use client";
 
 import ContractAiComingSoonPanel from "@/components/sections/ContractAiComingSoonPanel";
+import Footer from "@/components/layout/Footer";
 import Link from "next/link";
 import { useState } from "react";
-import Footer from "../../components/layout/Footer";
 
 type AnalysisType = "contract" | "invoice";
 

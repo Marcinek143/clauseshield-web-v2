@@ -8,25 +8,38 @@ export default function CallToAction() {
           <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white to-transparent mix-blend-overlay"></div>
           <div className="relative z-10 flex flex-col items-center gap-6">
             <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
-              Ready to clarify your contracts?
+              Contract AI is launching in 2026
             </h2>
             <p className="text-blue-100 text-lg md:text-xl max-w-2xl">
-              Join over 500+ enterprise teams using ClauseShield to secure their
-              legal and financial operations.
+              Advanced contract analysis and invoice processing is coming soon.
+            </p>
+            <p className="text-blue-100/80 text-sm max-w-2xl">
+              Currently available: Container Intelligence for demurrage,
+              detention, and tracking.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full justify-center">
               <Link
-                href="/request-demo"
+                href="/container"
                 className="h-12 px-8 rounded-xl bg-white text-primary font-bold text-lg hover:bg-slate-50 transition-colors shadow-xl inline-flex items-center justify-center"
               >
-                Get Started Free
+                Explore Container Intelligence
               </Link>
-              <Link
-                href="/for-founders"
-                className="h-12 px-8 rounded-xl bg-blue-700 border border-blue-500 text-white font-bold text-lg hover:bg-blue-600 transition-colors inline-flex items-center justify-center"
+              <button
+                className="h-12 px-8 rounded-xl bg-blue-700 border border-blue-500 text-white font-bold text-lg transition-colors inline-flex items-center justify-center opacity-50 cursor-not-allowed"
+                type="button"
+                disabled
+                title="This feature is not yet available"
+              >
+                Get Started Free
+              </button>
+              <button
+                className="h-12 px-8 rounded-xl bg-blue-700 border border-blue-500 text-white font-bold text-lg transition-colors inline-flex items-center justify-center opacity-50 cursor-not-allowed"
+                type="button"
+                disabled
+                title="This feature is not yet available"
               >
                 Talk to Sales
-              </Link>
+              </button>
             </div>
           </div>
         </div>

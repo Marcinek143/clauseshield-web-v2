@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#7587a7",
+                        "on-secondary-container": "#00616d",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed": "#d6e3ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#364764",
+                        "on-background": "#191c1e",
+                        "on-primary-fixed": "#071c36",
+                        "surface-bright": "#f7f9fb",
+                        "surface-variant": "#e0e3e5",
+                        "secondary-fixed-dim": "#00daf3",
+                        "tertiary": "#000714",
+                        "on-surface": "#191c1e",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "surface": "#f7f9fb",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-surface-variant": "#44474d",
+                        "secondary-fixed": "#9cf0ff",
+                        "secondary": "#006875",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f7f9fb",
+                        "on-secondary-fixed": "#001f24",
+                        "on-tertiary-container": "#7888a0",
+                        "tertiary-container": "#0f2033",
+                        "on-tertiary-fixed-variant": "#38485d",
+                        "surface-tint": "#4d5f7d",
+                        "secondary-container": "#00e3fd",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c4c6ce",
+                        "error": "#ba1a1a",
+                        "outline": "#75777e",
+                        "primary": "#000615",
+                        "inverse-surface": "#2d3133",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#d3e4fe",
+                        "inverse-primary": "#b5c7ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-dim": "#d8dadc",
+                        "on-tertiary-fixed": "#0b1c30",
+                        "surface-container-high": "#e6e8ea",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#b5c7ea",
+                        "primary-container": "#0b1f3a",
+                        "surface-container": "#eceef0",
+                        "tertiary-fixed-dim": "#b7c8e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(247, 249, 251, 0.7);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-50/70 dark:bg-slate-950/70 backdrop-blur-xl shadow-sm">
+<div class="flex justify-between items-center h-16 px-6 md:px-12 w-full max-w-screen-2xl mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-slate-900 dark:text-white font-['Manrope'] tracking-tight">ClauseShield</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors font-['Manrope'] tracking-tight" href="#">Calculator</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors font-['Manrope'] tracking-tight" href="#">Dashboard</a>
+<a class="text-slate-900 dark:text-white font-semibold border-b-2 border-slate-900 dark:border-white pb-1 font-['Manrope'] tracking-tight" href="#">Tracking</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-lg transition-all duration-300 ease-in-out">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+<button class="p-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-lg transition-all duration-300 ease-in-out relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden ml-2">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="professional portrait of a logistics manager in a modern office environment with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm6U2GrlyHPcPwGyRCFEaLf4wTaVoCBEACva12L5fiyQLkWgMkytdngsUjCAiQuwv9LRDZqYVvUd_002xDOEzStzfX9tgp9jj-4ebxhuRZsl4xBDFN1Jcy4_P1hqYmkO6ox8TyMr2IZ6DI0d9dBgW_lymtEpgwKbsCBsiJsxF41_ByOCEq_dUoWoLpUSxgyKcuhyksXXqzfc5rLcikoEDV5Jgxi1kWDurlYSJBFmDLeGYUQjOiL_i6-v5m_5hgdDDWAYVN3Cqklr0"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-20 px-6 md:px-12 max-w-screen-2xl mx-auto">
+<!-- Search Section -->
+<section class="mb-12">
+<h1 class="text-4xl md:text-5xl font-headline font-extrabold tracking-tight text-primary mb-8 max-w-2xl leading-tight">
+                Global Asset <span class="text-secondary">Intelligence</span>.
+            </h1>
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm max-w-4xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="relative">
+<label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2 ml-1">Container Number</label>
+<div class="flex items-center bg-surface-container-high rounded-lg px-4 py-3 focus-within:ring-2 focus-within:ring-secondary/30 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-3">box</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-sm font-medium text-on-surface placeholder:text-outline" placeholder="MSCU1234567" type="text"/>
+</div>
+</div>
+<div class="relative">
+<label class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wider mb-2 ml-1">Shipping Line</label>
+<div class="flex items-center bg-surface-container-high rounded-lg px-4 py-3 focus-within:ring-2 focus-within:ring-secondary/30 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-3">directions_boat</span>
+<select class="bg-transparent border-none focus:ring-0 w-full text-sm font-medium text-on-surface">
+<option>MSC Mediterranean Shipping</option>
+<option>Maersk Line</option>
+<option>CMA CGM</option>
+<option>Hapag-Lloyd</option>
+</select>
+</div>
+</div>
+<div class="flex items-end">
+<button class="w-full h-[48px] bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-lg font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">analytics</span>
+                            Track Shipment
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Tracking Details Dashboard (Bento Grid Style) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Map Visualization Card -->
+<div class="md:col-span-8 bg-surface-container-low rounded-xl overflow-hidden relative group">
+<div class="absolute inset-0 bg-slate-900/10 z-10 pointer-events-none"></div>
+<img class="w-full h-[450px] object-cover filter contrast-125 brightness-90" data-alt="abstract stylized global trade map with glowing transit lines connecting major ports across deep blue ocean" data-location="Singapore" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADXc1aRqQ9UtPA6hGTdtkXqMU32vX4Fg1f1WwAkKP3NU3kZgewID-fMSX4w4OXiM49ajKCo_9h6hjn2LTmrNsSw23uVQo7yW2P2A2ROoeHM4ospfh_aMlRfzejq9u-Pt70aWCBZaI7EgTCbVQmsbwJDdpWnLbpMnvZkg0TwE8k9b1Y7MRHANeg3-BcWA_RqmG5qHAzuOqbafQNln2gkTf9yqQZqJovb35CetSdJwfyExyiNK4N3oIRa7YXubABnsQJD5nNqW5kU98"/>
+<div class="absolute top-6 left-6 z-20 flex gap-2">
+<span class="px-3 py-1.5 glass-panel rounded-full text-xs font-bold flex items-center gap-2 border border-outline-variant/10">
+<span class="w-2 h-2 rounded-full bg-secondary-fixed-dim animate-pulse"></span>
+                        LIVE POSITION
+                    </span>
+<span class="px-3 py-1.5 glass-panel rounded-full text-xs font-bold border border-outline-variant/10">
+                        VESSEL: MSC AMELIA
+                    </span>
+</div>
+<div class="absolute bottom-6 left-6 right-6 z-20 glass-panel rounded-xl p-6 border border-white/20">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div class="flex items-center gap-4">
+<div class="bg-primary-container p-3 rounded-lg text-white">
+<span class="material-symbols-outlined">directions_boat</span>
+</div>
+<div>
+<p class="text-xs font-medium text-on-surface-variant">Current Status</p>
+<h3 class="text-xl font-bold text-primary">In Transit - Indian Ocean</h3>
+</div>
+</div>
+<div class="flex gap-8">
+<div class="text-right">
+<p class="text-xs font-medium text-on-surface-variant">Distance to Port</p>
+<p class="text-lg font-bold">1,240 nm</p>
+</div>
+<div class="text-right">
+<p class="text-xs font-medium text-on-surface-variant">Speed</p>
+<p class="text-lg font-bold">18.4 kn</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Dates & Status Sidebar -->
+<div class="md:col-span-4 flex flex-col gap-6">
+<!-- Status Badge Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Shipment Health</h4>
+<span class="material-symbols-outlined text-secondary" title="Verified AI analysis">verified</span>
+</div>
+<div class="flex items-center gap-4 p-4 bg-secondary/5 rounded-lg border border-secondary/10">
+<span class="material-symbols-outlined text-secondary text-3xl">check_circle</span>
+<div>
+<p class="text-sm font-bold text-secondary">ON SCHEDULE</p>
+<p class="text-xs text-on-surface-variant">Next Port: Port of Rotterdam</p>
+</div>
+</div>
+</div>
+<!-- Key Dates Bento Card -->
+<div class="bg-primary text-white rounded-xl p-6 shadow-lg flex-grow">
+<h4 class="text-xs font-bold text-on-primary-container uppercase tracking-widest mb-6">Key Milestones</h4>
+<div class="space-y-6">
+<div class="flex items-center justify-between group cursor-help">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim">calendar_today</span>
+<div>
+<p class="text-xs text-on-primary-container">ETA Rotterdam</p>
+<p class="text-lg font-bold">Oct 24, 2024</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-primary-container opacity-50 text-sm">info</span>
+</div>
+<div class="flex items-center justify-between group cursor-help">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim">dock</span>
+<div>
+<p class="text-xs text-on-primary-container">Planned Discharge</p>
+<p class="text-lg font-bold">Oct 25, 2024</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-primary-container opacity-50 text-sm">info</span>
+</div>
+<div class="flex items-center justify-between group cursor-help">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-fixed-dim">timer_off</span>
+<div>
+<p class="text-xs text-on-primary-container">Last Free Day</p>
+<p class="text-lg font-bold text-secondary-fixed-dim">Oct 30, 2024</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-primary-container opacity-50 text-sm">info</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Journey Timeline Section -->
+<section class="mt-12 bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
+<div class="flex items-center justify-between mb-12">
+<h2 class="text-2xl font-headline font-bold text-primary">Logistics Journey</h2>
+<div class="flex gap-4">
+<button class="px-4 py-2 bg-surface-container-lowest text-primary text-xs font-bold rounded-lg border border-outline-variant/20 hover:bg-surface-container-high transition-colors">Export Logs</button>
+<button class="px-4 py-2 bg-surface-container-lowest text-primary text-xs font-bold rounded-lg border border-outline-variant/20 hover:bg-surface-container-high transition-colors">Share Tracking</button>
+</div>
+</div>
+<div class="relative">
+<!-- Timeline Connecting Line -->
+<div class="absolute top-1/2 left-0 w-full h-1 bg-surface-variant -translate-y-1/2"></div>
+<div class="absolute top-1/2 left-0 w-[65%] h-1 bg-secondary -translate-y-1/2 transition-all duration-1000"></div>
+<div class="relative z-10 flex justify-between">
+<!-- Origin -->
+<div class="flex flex-col items-center gap-4 group">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center shadow-md ring-4 ring-white">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div class="text-center">
+<p class="text-sm font-bold text-primary">Shanghai, CN</p>
+<p class="text-xs text-on-surface-variant">Departed Oct 02</p>
+</div>
+</div>
+<!-- Transit Port -->
+<div class="flex flex-col items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center shadow-md ring-4 ring-white">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">anchor</span>
+</div>
+<div class="text-center">
+<p class="text-sm font-bold text-primary">Singapore, SG</p>
+<p class="text-xs text-on-surface-variant">Departed Oct 08</p>
+</div>
+</div>
+<!-- Current Transit -->
+<div class="flex flex-col items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-white text-secondary border-2 border-secondary flex items-center justify-center shadow-lg ring-4 ring-secondary/20 relative">
+<span class="material-symbols-outlined animate-pulse">sailing</span>
+</div>
+<div class="text-center">
+<p class="text-sm font-bold text-secondary">In Transit</p>
+<p class="text-xs text-on-surface-variant">Indian Ocean</p>
+</div>
+</div>
+<!-- Destination Port -->
+<div class="flex flex-col items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center ring-4 ring-white">
+<span class="material-symbols-outlined text-sm">home_storage</span>
+</div>
+<div class="text-center">
+<p class="text-sm font-bold text-on-surface-variant opacity-60">Rotterdam, NL</p>
+<p class="text-xs text-on-surface-variant opacity-60">ETA Oct 24</p>
+</div>
+</div>
+<!-- Final Destination -->
+<div class="flex flex-col items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center ring-4 ring-white">
+<span class="material-symbols-outlined text-sm">warehouse</span>
+</div>
+<div class="text-center">
+<p class="text-sm font-bold text-on-surface-variant opacity-60">Berlin Hub</p>
+<p class="text-xs text-on-surface-variant opacity-60">Est. Oct 27</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Terms & Tooltips Section -->
+<section class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="p-4 bg-surface-container-lowest rounded-lg group cursor-help transition-all hover:shadow-sm border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm text-secondary">help</span>
+<h5 class="text-xs font-bold text-primary uppercase">ETA</h5>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Estimated Time of Arrival. The predicted time when the vessel is expected to arrive at the port of discharge.</p>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg group cursor-help transition-all hover:shadow-sm border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm text-secondary">help</span>
+<h5 class="text-xs font-bold text-primary uppercase">Discharge</h5>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">The physical act of unloading the container from the vessel onto the terminal quay.</p>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg group cursor-help transition-all hover:shadow-sm border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm text-secondary">help</span>
+<h5 class="text-xs font-bold text-primary uppercase">Free Day</h5>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">The last day before demurrage charges are applied for storing the container at the terminal.</p>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg group cursor-help transition-all hover:shadow-sm border border-outline-variant/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm text-secondary">help</span>
+<h5 class="text-xs font-bold text-primary uppercase">LFD</h5>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">Last Free Day. Crucial deadline to avoid significant port storage and carrier detention fees.</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-100 dark:bg-slate-900 w-full py-12 px-6 border-t border-slate-200 dark:border-slate-800">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-screen-2xl mx-auto">
+<div class="col-span-1">
+<span class="font-['Manrope'] font-bold text-lg text-slate-900 dark:text-white">ClauseShield</span>
+<p class="mt-4 text-slate-500 dark:text-slate-400 font-['Inter'] text-sm leading-relaxed">
+                    Elevating global container logistics through architectural precision and real-time intelligence.
+                </p>
+</div>
+<div class="col-span-1 flex flex-col gap-3">
+<h5 class="font-bold text-slate-900 dark:text-white text-sm">Platform</h5>
+<a class="text-slate-500 dark:text-slate-400 font-['Inter'] text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-opacity opacity-80 hover:opacity-100" href="#">Tracking</a>
+<a class="text-slate-500 dark:text-slate-400 font-['Inter'] text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-opacity opacity-80 hover:opacity-100" href="#">Calculators</a>
+<a class="text-slate-500 dark:text-slate-400 font-['Inter'] text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-opacity opacity-80 hover:opacity-100" href="#">API Documentation</a>
+</div>
+<div class="col-span-1 flex flex-col gap-3">
+<h5 class="font-bold text-slate-900 dark:text-white text-sm">Company</h5>
+<a class="text-slate-500 dark:text-slate-400 font-['Inter'] text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-opacity opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-slate-500 dark:text-slate-400 font-['Inter'] text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-opacity opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-slate-500 dark:text-slate-400 font-['Inter'] text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-opacity opacity-80 hover:opacity-100" href="#">Global Network</a>
+</div>
+<div class="col-span-1 flex flex-col gap-3">
+<h5 class="font-bold text-slate-900 dark:text-white text-sm">Support</h5>
+<a class="text-slate-500 dark:text-slate-400 font-['Inter'] text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-opacity opacity-80 hover:opacity-100" href="#">Contact Support</a>
+<a class="text-slate-500 dark:text-slate-400 font-['Inter'] text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-opacity opacity-80 hover:opacity-100" href="#">Documentation</a>
+<a class="text-slate-500 dark:text-slate-400 font-['Inter'] text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-opacity opacity-80 hover:opacity-100" href="#">Status Page</a>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-slate-200/50 dark:border-slate-800/50 max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 dark:text-slate-400 font-['Inter'] text-xs">© 2024 ClauseShield Container Intelligence. All rights reserved.</p>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-slate-500 hover:text-primary cursor-pointer text-xl">language</span>
+<span class="material-symbols-outlined text-slate-500 hover:text-primary cursor-pointer text-xl">security</span>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import HeroVisual from "./HeroVisual";
 
 export default function Hero() {
@@ -11,26 +12,49 @@ export default function Hero() {
         <div className="flex flex-col gap-8 max-w-[1080px] w-full @container">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center">
             <div className="flex flex-col gap-6 lg:w-1/2 text-center lg:text-left items-center lg:items-start z-10">
-              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary uppercase tracking-wider border border-primary/20">
+              <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800 uppercase tracking-wider border border-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/20">
                 <span className="material-symbols-outlined text-sm">
-                  new_releases
+                  schedule
                 </span>
-                v2.0 Released
+                Coming Soon
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight tracking-tight text-slate-900 dark:text-slate-100">
-                AI That Brings Clarity to{" "}
-                <span className="text-primary">Contracts</span> and{" "}
-                <span className="text-primary">Cash</span>
+                Contract AI is launching in 2026
               </h1>
               <h2 className="text-lg text-slate-600 dark:text-slate-400 font-normal leading-relaxed max-w-xl">
-                Unify your legal and financial workflows. Detect risks in seconds
-                and automate invoice processing with enterprise-grade precision.
+                Advanced contract analysis and invoice processing is coming
+                soon.
               </h2>
+              <div className="w-full max-w-xl rounded-2xl border border-slate-200 bg-white/70 p-4 text-left shadow-sm dark:border-navy-700 dark:bg-navy-800/70">
+                <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+                  Currently available: Container Intelligence for demurrage,
+                  detention, and tracking.
+                </p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  Use the active product while Contract AI is in development.
+                </p>
+              </div>
               <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
-                <button className="flex h-12 min-w-[140px] items-center justify-center rounded-xl bg-primary px-6 text-white text-base font-bold shadow-lg shadow-primary/30 hover:bg-primary-hover hover:scale-[1.02] transition-all">
+                <Link
+                  className="flex h-12 min-w-[220px] items-center justify-center rounded-xl bg-primary px-6 text-white text-base font-bold shadow-lg shadow-primary/30 hover:bg-primary-hover hover:scale-[1.02] transition-all"
+                  href="/container"
+                >
+                  Explore Container Intelligence
+                </Link>
+                <button
+                  className="flex h-12 min-w-[140px] items-center justify-center rounded-xl bg-white dark:bg-navy-800 border border-slate-200 dark:border-navy-700 px-6 text-slate-900 dark:text-slate-100 text-base font-bold transition-all gap-2 opacity-50 cursor-not-allowed"
+                  type="button"
+                  disabled
+                  title="This feature is not yet available"
+                >
                   Start Free Trial
                 </button>
-                <button className="flex h-12 min-w-[140px] items-center justify-center rounded-xl bg-white dark:bg-navy-800 border border-slate-200 dark:border-navy-700 px-6 text-slate-900 dark:text-slate-100 text-base font-bold hover:bg-slate-50 dark:hover:bg-navy-700 transition-all gap-2">
+                <button
+                  className="flex h-12 min-w-[140px] items-center justify-center rounded-xl bg-white dark:bg-navy-800 border border-slate-200 dark:border-navy-700 px-6 text-slate-900 dark:text-slate-100 text-base font-bold transition-all gap-2 opacity-50 cursor-not-allowed"
+                  type="button"
+                  disabled
+                  title="This feature is not yet available"
+                >
                   <span className="material-symbols-outlined">play_circle</span>
                   Book Demo
                 </button>

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function FounderValuePillars() {
   return (
     <>
@@ -81,7 +83,7 @@ export default function FounderValuePillars() {
                 clutter with clarity.
               </p>
             </div>
-            <a
+            <Link
               className="text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all dark:hover:text-primary"
               href="#"
             >
@@ -89,7 +91,7 @@ export default function FounderValuePillars() {
               <span className="material-symbols-outlined text-xl">
                 arrow_forward
               </span>
-            </a>
+            </Link>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="p-6 rounded-2xl bg-background-light border border-slate-200 hover:border-primary/50 transition-colors group dark:bg-navy-800 dark:border-navy-700">

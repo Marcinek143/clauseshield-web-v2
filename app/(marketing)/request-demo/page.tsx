@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import Header from "../../components/layout/Header";
-import Footer from "../../components/layout/Footer";
-import RequestDemoClient from "./request-demo-client";
+
+import Footer from "@/components/layout/Footer";
+import RequestDemoClient from "@/app/request-demo/request-demo-client";
 
 export const dynamic = "force-dynamic";
 
@@ -52,7 +52,6 @@ function RequestDemoFallback() {
 export default function RequestDemoPage() {
   return (
     <div className="relative flex min-h-screen w-full flex-col group/design-root">
-      <Header />
       <Suspense fallback={<RequestDemoFallback />}>
         <RequestDemoClient />
       </Suspense>

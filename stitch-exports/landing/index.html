@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#7587a7",
+                    "on-secondary-container": "#00616d",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#d6e3ff",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#364764",
+                    "on-background": "#191c1e",
+                    "on-primary-fixed": "#071c36",
+                    "surface-bright": "#f7f9fb",
+                    "surface-variant": "#e0e3e5",
+                    "secondary-fixed-dim": "#00daf3",
+                    "tertiary": "#000714",
+                    "on-surface": "#191c1e",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "surface": "#f7f9fb",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-surface-variant": "#44474d",
+                    "secondary-fixed": "#9cf0ff",
+                    "secondary": "#006875",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f7f9fb",
+                    "on-secondary-fixed": "#001f24",
+                    "on-tertiary-container": "#7888a0",
+                    "tertiary-container": "#0f2033",
+                    "on-tertiary-fixed-variant": "#38485d",
+                    "surface-tint": "#4d5f7d",
+                    "secondary-container": "#00e3fd",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c4c6ce",
+                    "error": "#ba1a1a",
+                    "outline": "#75777e",
+                    "primary": "#000615",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#d3e4fe",
+                    "inverse-primary": "#b5c7ea",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-dim": "#d8dadc",
+                    "on-tertiary-fixed": "#0b1c30",
+                    "surface-container-high": "#e6e8ea",
+                    "on-error-container": "#93000a",
+                    "primary-fixed-dim": "#b5c7ea",
+                    "primary-container": "#0b1f3a",
+                    "surface-container": "#eceef0",
+                    "tertiary-fixed-dim": "#b7c8e1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.75rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+      }
+      .ghost-border {
+        box-shadow: inset 0 0 0 1px rgba(196, 198, 206, 0.15);
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-slate-50/70 dark:bg-slate-950/70 backdrop-blur-xl shadow-sm">
+<div class="flex justify-between items-center h-16 px-6 md:px-12 w-full max-w-screen-2xl mx-auto font-['Manrope'] tracking-tight">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-slate-900 dark:text-white">ClauseShield</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-slate-900 dark:text-white font-semibold border-b-2 border-slate-900 dark:border-white pb-1 transition-all duration-300 ease-in-out" href="#">Calculator</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors" href="#">Tracking</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-lg transition-all duration-300 ease-in-out">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-50" data-icon="settings">settings</span>
+</button>
+<button class="p-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-lg transition-all duration-300 ease-in-out relative">
+<span class="material-symbols-outlined text-slate-900 dark:text-slate-50" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="professional portrait of a logistics manager in a clean modern office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYmjCKQNMWFJ_CroJVTejJtjJTLBpLyhrydiUgH9kpXY7AD-DoYJ_6cHhjxl5ZgrhT1TRzE8vxuOQkphN6wOWj731rQHXepSSwaa3ZqsOpvoI9xyImNRZTIeVy5LPeend4A1zJ2O2ic8Bug1rbrsH1f7BSXas60X7GyvDB849hze8_ZS_q0Wd7weErpShwe-rG_XUD7qNJeBDgbXE7A6LxnTUp44SoPTtPm--NcLKr0SYI-8Lc62mmNbhJ3BpzaU0pGhhaNaGJuL4"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="pt-16 overflow-x-hidden">
+<!-- Hero Section -->
+<section class="relative pt-24 pb-32 px-6 md:px-12 max-w-screen-2xl mx-auto overflow-hidden">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div class="z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-secondary-fixed text-on-secondary-fixed rounded-full text-xs font-semibold mb-6">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        AI-POWERED LOGISTICS INTELLIGENCE
+                    </div>
+<h1 class="font-headline text-5xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-on-surface mb-8">
+                        Stop Overpaying <br/><span class="text-secondary">Demurrage.</span>
+</h1>
+<p class="text-on-surface-variant text-xl leading-relaxed max-w-xl mb-12">
+                        Calculate container costs instantly. Accurate demurrage, detention, and storage calculations in seconds with global terminal intelligence.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<button class="px-8 py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-semibold rounded-xl shadow-lg shadow-primary/10 hover:translate-y-[-2px] transition-all">
+                            Start Calculation
+                        </button>
+<button class="px-8 py-4 bg-secondary-container text-on-secondary-container font-semibold rounded-xl hover:bg-secondary-container/80 transition-all">
+                            Track Container
+                        </button>
+</div>
+</div>
+<div class="relative">
+<div class="absolute -top-24 -right-24 w-96 h-96 bg-secondary-container/20 blur-[100px] rounded-full"></div>
+<div class="relative glass-card p-4 rounded-xl ghost-border overflow-hidden rotate-2 shadow-2xl">
+<img class="rounded-lg w-full aspect-[4/3] object-cover" data-alt="high-angle wide shot of a modern automated container port with glowing blue tech overlays representing data flow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAiCJ8nBf4AVIc6OHo6f0fUa7zu3dQbboroXP_YYr3uKH-Uq1W6y2Z0EjeAvQgRmkGjqNjXl6fGdLdpreivzAZBXWBfMr2xJt_Ow2cK9TzEQ0IYjA-7b_KzJDldcGJEG4UnXK003SevgUVyqi5hzvLv5aZnOD2DHAOA6e_LxZGwhDfSsQkqfMvI9leSs_zGZSWKsDiWfs7MTqTzvoQ6o3zp_IFATfmvJO5-xWmW-tnn1Y5MhwJJK0FTx7JlBlNdfodONMUtVfkKio"/>
+<div class="absolute bottom-12 left-12 p-6 glass-card rounded-xl border border-white/20 shadow-xl max-w-xs -rotate-2">
+<div class="flex items-center gap-3 mb-2">
+<span class="w-3 h-3 bg-secondary rounded-full animate-pulse"></span>
+<span class="text-xs font-bold text-on-surface uppercase tracking-widest">Live Monitoring</span>
+</div>
+<div class="text-2xl font-headline font-bold text-on-surface">$14,240.00</div>
+<div class="text-xs text-on-surface-variant">Estimated Storage Savings Today</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Features -->
+<section class="bg-surface-container-low py-32 px-6 md:px-12">
+<div class="max-w-screen-2xl mx-auto">
+<div class="mb-16">
+<h2 class="font-headline text-3xl font-bold mb-4">Logistics Command Center</h2>
+<p class="text-on-surface-variant">Intelligent tools designed for the modern supply chain professional.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Calculator Card -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl p-8 shadow-sm ghost-border flex flex-col md:flex-row gap-12 items-center overflow-hidden">
+<div class="flex-1">
+<div class="w-12 h-12 bg-secondary-fixed rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-secondary-fixed" data-icon="calculate">calculate</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4">Demurrage Calculator</h3>
+<p class="text-on-surface-variant mb-6">Instantly calculate port storage and demurrage fees across 500+ global terminals. Automated tariff updates ensure 99.9% accuracy.</p>
+<a class="inline-flex items-center text-secondary font-semibold hover:gap-2 transition-all" href="#">
+                                Try it now <span class="material-symbols-outlined ml-1">arrow_forward</span>
+</a>
+</div>
+<div class="flex-1 w-full bg-surface-container-low rounded-lg p-6 relative overflow-hidden">
+<div class="space-y-4">
+<div class="h-8 bg-surface-container-lowest rounded-md w-3/4 animate-pulse"></div>
+<div class="h-8 bg-surface-container-lowest rounded-md w-1/2 animate-pulse"></div>
+<div class="h-8 bg-surface-container-lowest rounded-md w-5/6 animate-pulse"></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+</div>
+</div>
+<!-- Small Feature 1 -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-xl p-8 shadow-sm ghost-border">
+<div class="w-12 h-12 bg-primary-fixed rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="lock_clock">lock_clock</span>
+</div>
+<h3 class="font-headline text-xl font-bold mb-3">Detention Calculator</h3>
+<p class="text-on-surface-variant text-sm">Monitor empty return deadlines and prevent costly detention charges with predictive analytics.</p>
+</div>
+<!-- Small Feature 2 -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-xl p-8 shadow-sm ghost-border">
+<div class="w-12 h-12 bg-secondary-fixed rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-on-secondary-fixed" data-icon="inventory_2">inventory_2</span>
+</div>
+<h3 class="font-headline text-xl font-bold mb-3">Storage Estimator</h3>
+<p class="text-on-surface-variant text-sm">Warehouse and off-dock storage fee forecasting based on real-time capacity and regional rates.</p>
+</div>
+<!-- Tracking Card -->
+<div class="md:col-span-8 bg-primary rounded-xl p-8 shadow-xl relative overflow-hidden group">
+<div class="relative z-10">
+<div class="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-white" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<h3 class="font-headline text-2xl font-bold text-white mb-4">Container Tracking</h3>
+<p class="text-slate-400 mb-6 max-w-md">Global visibility with satellite AIS data. Real-time alerts for ETA changes, transshipment delays, and port congestion.</p>
+<button class="bg-white text-primary px-6 py-2 rounded-lg font-bold hover:bg-secondary-fixed transition-colors">Launch Tracker</button>
+</div>
+<div class="absolute top-0 right-0 h-full w-1/2 opacity-20 group-hover:opacity-40 transition-opacity">
+<img class="h-full w-full object-cover" data-alt="abstract digital map with glowing blue network lines connecting global trade hubs on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALdNea-IyHSxSmXOc4FkPO5MMmh3snZYu4AL7hwsl2Ma7NCgwgm6w-F4tx2UDnwIMi-LzNqC-d1SsM9vbsNmXs-IdkhDKzT0ZuKmJxnF-H1fmJ4iepldYDHNffYvJZB29sYbiH8DDPC6j_IXGJJyAr3XwlpnSmd14ASRznNUELd_sx0Un4SeubuO3jul4WTNgncVFislHiAxpX5dRWiP50qF4L96Ba0v-o6PlZFX_sxbZ8V9PsUZdNPSIuZkoxG8up4e_8Ot6YWt0"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust Section -->
+<section class="py-24 px-6 md:px-12 bg-surface">
+<div class="max-w-screen-2xl mx-auto text-center">
+<p class="text-on-surface-variant font-semibold tracking-widest text-xs uppercase mb-12">Trusted by global industry leaders</p>
+<div class="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
+<span class="font-headline text-2xl font-bold">FREIGHTNET</span>
+<span class="font-headline text-2xl font-bold">LOGISYS</span>
+<span class="font-headline text-2xl font-bold">OCEANIC</span>
+<span class="font-headline text-2xl font-bold">GLOBALPORT</span>
+<span class="font-headline text-2xl font-bold">SHIPSTR</span>
+</div>
+</div>
+</section>
+<!-- CTA Banner -->
+<section class="px-6 md:px-12 mb-24">
+<div class="max-w-screen-2xl mx-auto bg-gradient-to-br from-primary-container to-tertiary-container rounded-3xl p-12 md:p-20 text-center relative overflow-hidden shadow-2xl shadow-primary-container/20">
+<div class="absolute inset-0 opacity-10">
+<img class="w-full h-full object-cover" data-alt="rows of colorful shipping containers in a terminal at dusk with soft ambient lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAEuL9hrFp1TryQL9Yt2bwwmJ3SmgzPj5QymeJs-2Iphc7axgmeu2cGHYHaP2XypIpDJQdq8b6Bl7oJR2f955yQ2jJ4-0HPD7sIXb5aUrHykC1NicXM0gR_A8qqT4dfo1UTb2lTHHzB7XsEv8GFlsOXN7ZxdmZpn2UCXGrAbRntOaiij0m5zE9VyFMTnuXb71Wev5JgPCLT9gOb6zULdjauhi0DPhy1uEBTc51LkzKGzlIbGbSpXDYMBA-PeDdHKZM-G6lPS3tbg8"/>
+</div>
+<div class="relative z-10 max-w-2xl mx-auto">
+<h2 class="font-headline text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">Ready to optimize your logistics spend?</h2>
+<p class="text-slate-300 text-lg mb-10">Join over 1,500 freight forwarders and logistics teams managing container costs with ClauseShield intelligence.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="px-10 py-5 bg-secondary text-white font-bold rounded-xl hover:scale-105 transition-all shadow-xl shadow-secondary/20">Get a Live Demo</button>
+<button class="px-10 py-5 bg-white/10 backdrop-blur-md text-white font-bold rounded-xl hover:bg-white/20 transition-all border border-white/10">View Global Network</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-100 dark:bg-slate-900 w-full py-12 px-6 border-t border-slate-200 dark:border-slate-800">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-screen-2xl mx-auto font-['Inter'] text-sm text-slate-900 dark:text-slate-50">
+<div class="space-y-4">
+<span class="font-['Manrope'] font-bold text-lg text-slate-900 dark:text-white">ClauseShield</span>
+<p class="text-slate-500 dark:text-slate-400">Enterprise container cost management and port intelligence for global supply chains.</p>
+</div>
+<div>
+<h4 class="font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-opacity" href="#">Global Network</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-opacity" href="#">Cost Calculator</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-opacity" href="#">Terminal Data</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
+<ul class="space-y-4">
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-opacity" href="#">Terms of Service</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-opacity" href="#">Privacy Policy</a></li>
+<li><a class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-opacity" href="#">Contact Support</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 uppercase tracking-wider text-xs">Newsletter</h4>
+<p class="text-slate-500 dark:text-slate-400 mb-4">Stay updated with port intelligence alerts.</p>
+<div class="flex gap-2">
+<input class="bg-white dark:bg-slate-800 border-none rounded-lg px-4 py-2 w-full text-sm" placeholder="Email" type="email"/>
+<button class="p-2 bg-primary text-white rounded-lg"><span class="material-symbols-outlined" data-icon="send">send</span></button>
+</div>
+</div>
+</div>
+<div class="max-w-screen-2xl mx-auto mt-12 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 dark:text-slate-400">© 2024 ClauseShield Container Intelligence. All rights reserved.</p>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-slate-500 hover:text-primary cursor-pointer transition-colors" data-icon="share">share</span>
+<span class="material-symbols-outlined text-slate-500 hover:text-primary cursor-pointer transition-colors" data-icon="public">public</span>
+</div>
+</div>
+</footer>
+</body></html>

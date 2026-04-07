@@ -1,29 +1,20 @@
-import Link from "next/link";
-
 type PersonaCardProps = {
-  href: string;
   imageClassName: string;
   imageAlt: string;
   icon: string;
   title: string;
   description: string;
-  cta: string;
 };
 
 export default function PersonaCard({
-  href,
   imageClassName,
   imageAlt,
   icon,
   title,
   description,
-  cta,
 }: PersonaCardProps) {
   return (
-    <Link
-      href={href}
-      className="group flex flex-col bg-white dark:bg-navy-800 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-200 dark:border-navy-700 overflow-hidden"
-    >
+    <div className="group flex flex-col bg-white dark:bg-navy-800 rounded-2xl shadow-sm border border-slate-200 dark:border-navy-700 overflow-hidden opacity-80">
       <div
         className={`h-48 w-full bg-cover bg-center ${imageClassName}`}
         data-alt={imageAlt}
@@ -44,14 +35,11 @@ export default function PersonaCard({
           </p>
         </div>
         <div className="mt-auto pt-4 border-t border-slate-100 dark:border-navy-700">
-          <span className="flex items-center gap-2 text-primary font-bold text-sm group-hover:gap-3 transition-all">
-            {cta}{" "}
-            <span className="material-symbols-outlined text-lg">
-              arrow_forward
-            </span>
+          <span className="flex items-center gap-2 text-slate-500 dark:text-slate-400 font-bold text-sm">
+            Coming Soon
           </span>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

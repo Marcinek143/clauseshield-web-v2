@@ -294,10 +294,11 @@ export default function LegalDefensibilityStrip() {
               </h2>
               <p className="text-gray-400 mb-6 dark:text-slate-400">
                 Your data is encrypted at rest and in transit. We strictly
-                adhere to a "zero-training" policy—your confidential contracts
+                adhere to a &quot;zero-training&quot; policy-your confidential
+                contracts
                 never train our public models.
               </p>
-              <a
+              <Link
                 className="text-primary font-bold hover:text-white transition-colors flex items-center gap-2"
                 href="#"
               >
@@ -305,7 +306,7 @@ export default function LegalDefensibilityStrip() {
                 <span className="material-symbols-outlined text-sm">
                   arrow_forward
                 </span>
-              </a>
+              </Link>
             </div>
             <div className="flex flex-wrap justify-center gap-6 opacity-80">
               <div className="flex flex-col items-center gap-2">

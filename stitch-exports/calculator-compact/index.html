@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ClauseShield | Cost Intelligence Calculator</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Manrope & Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#00daf3",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-container": "#00e3fd",
+                    "inverse-primary": "#b5c7ea",
+                    "tertiary": "#000714",
+                    "on-primary-fixed-variant": "#364764",
+                    "primary-fixed": "#d6e3ff",
+                    "outline": "#75777e",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-fixed-dim": "#b7c8e1",
+                    "primary-fixed-dim": "#b5c7ea",
+                    "tertiary-fixed": "#d3e4fe",
+                    "surface-variant": "#e0e3e5",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#44474d",
+                    "tertiary-container": "#0f2033",
+                    "surface": "#f7f9fb",
+                    "surface-tint": "#4d5f7d",
+                    "surface-bright": "#f7f9fb",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#071c36",
+                    "on-background": "#191c1e",
+                    "on-tertiary-container": "#7888a0",
+                    "background": "#f7f9fb",
+                    "secondary": "#006875",
+                    "primary": "#000615",
+                    "surface-dim": "#d8dadc",
+                    "on-secondary-container": "#00616d",
+                    "primary-container": "#0b1f3a",
+                    "outline-variant": "#c4c6ce",
+                    "inverse-surface": "#2d3133",
+                    "secondary-fixed": "#9cf0ff",
+                    "on-tertiary-fixed": "#0b1c30",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#001f24",
+                    "on-tertiary-fixed-variant": "#38485d",
+                    "on-primary-container": "#7587a7",
+                    "surface-container": "#eceef0",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "1rem",
+                    "xl": "1.25rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#f7f9fb]/70 backdrop-blur-md shadow-xl shadow-[#000615]/5 h-20 flex justify-between items-center px-8">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#0B1F3A] tracking-tighter font-headline">ClauseShield</span>
+<div class="hidden md:flex items-center gap-6 font-['Manrope'] font-medium text-sm tracking-tight">
+<a class="text-[#006875] font-bold border-b-2 border-[#006875] pb-1" href="#">Calculator</a>
+<a class="text-[#44474d] hover:text-[#0B1F3A] transition-colors" href="#">Dashboard</a>
+<a class="text-[#44474d] hover:text-[#0B1F3A] transition-colors" href="#">Tracking</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-primary-container text-white px-5 py-2 rounded-lg text-sm font-bold hover:opacity-90 active:scale-95 transition-all">Upgrade</button>
+<div class="flex gap-2">
+<span class="material-symbols-outlined p-2 text-[#44474d] hover:bg-[#f2f4f6]/50 rounded-lg cursor-pointer">notifications</span>
+<span class="material-symbols-outlined p-2 text-[#44474d] hover:bg-[#f2f4f6]/50 rounded-lg cursor-pointer">settings</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden ml-2">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a logistics executive in a clean modern office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUxjKPiLrHIPzoN6JX-x5xuK4XpBDn7_ub_5O2uwxwSOIVD33D21u5Le6ybH6Dk7IwlX7HcWy91OaSPfNY4o1BpiANSAiV2EPZd2A8TKaiwId9jDX_MX454AM2U9GcneRHSxoYedDM2fJV8H7OEfqRrljxlSfjueyRgBE6795KZhp1rwXpm_upuXdIJPcYbghPCp70U8C6iD1Seis-5TgnJ_ysQ0WpUt9d5odcafyluKCEtBX9GhdRG05kQ6df4WiXJya9zx69YJg"/>
+</div>
+</div>
+</nav>
+<!-- Main Canvas -->
+<main class="pt-28 pb-12 px-8 max-w-[1600px] mx-auto">
+<!-- Header Section -->
+<header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-4xl font-extrabold font-headline tracking-tighter text-primary mb-2">Cost Intelligence Calculator</h1>
+<p class="text-on-surface-variant font-medium">Real-time maritime logistics cost modeling and predictive rate analysis.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2.5 bg-surface-container-lowest shadow-sm rounded-lg text-sm font-semibold text-primary hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-[20px]">save</span>
+                    Save Scenario
+                </button>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-primary text-white shadow-lg rounded-lg text-sm font-semibold hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+                    Recalculate
+                </button>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+<!-- Parameters Card -->
+<section class="md:col-span-4 bg-surface-container-lowest rounded-lg p-6 flex flex-col">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-secondary">tune</span>
+<h3 class="font-headline font-bold text-lg text-primary">Input Parameters</h3>
+</div>
+<div class="space-y-5 flex-grow">
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Container Type</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg text-sm font-medium focus:ring-2 focus:ring-secondary/30 py-3 px-4 appearance-none">
+<option>40' High Cube (Standard)</option>
+<option>20' Standard</option>
+<option>40' Reefer</option>
+</select>
+</div>
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Origin Port</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg text-sm font-medium focus:ring-2 focus:ring-secondary/30 py-3 px-10" type="text" value="Shanghai (CNSHA)"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">location_on</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Destination Port</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg text-sm font-medium focus:ring-2 focus:ring-secondary/30 py-3 px-10" type="text" value="Rotterdam (NLRTM)"/>
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">anchor</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Volume (TEU)</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg text-sm font-medium focus:ring-2 focus:ring-secondary/30 py-3 px-4" type="number" value="12"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">Gross Weight</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg text-sm font-medium focus:ring-2 focus:ring-secondary/30 py-3 pl-4 pr-10" type="text" value="24,500"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-on-surface-variant">KG</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 p-4 bg-secondary-fixed/20 rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<p class="text-xs font-semibold text-on-secondary-fixed-variant">AI suggested optimal route via Suez Canal based on current fuel indices.</p>
+</div>
+</section>
+<!-- Rate Tiers Card -->
+<section class="md:col-span-5 flex flex-col gap-6">
+<!-- Tiers Table -->
+<div class="bg-surface-container-lowest rounded-lg p-6 flex-grow">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">layers</span>
+<h3 class="font-headline font-bold text-lg text-primary">Intelligence Rate Tiers</h3>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-[10px] font-bold uppercase">Live Rates</span>
+</div>
+<div class="space-y-1">
+<div class="grid grid-cols-3 px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
+<span>Service Tier</span>
+<span class="text-center">Transit</span>
+<span class="text-right">Unit Rate</span>
+</div>
+<div class="grid grid-cols-3 items-center px-4 py-4 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="text-sm font-bold text-primary">Priority Express</span>
+</div>
+<span class="text-sm font-medium text-on-surface-variant text-center">22 Days</span>
+<span class="text-sm font-bold text-primary text-right">$4,250.00</span>
+</div>
+<div class="grid grid-cols-3 items-center px-4 py-4 bg-secondary/5 border-l-2 border-secondary rounded-lg">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-sm font-bold text-secondary">Standard (Recommended)</span>
+</div>
+<span class="text-sm font-medium text-on-surface-variant text-center">28 Days</span>
+<span class="text-sm font-bold text-secondary text-right">$3,100.00</span>
+</div>
+<div class="grid grid-cols-3 items-center px-4 py-4 hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer group">
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<span class="text-sm font-bold text-primary">Economy Flow</span>
+</div>
+<span class="text-sm font-medium text-on-surface-variant text-center">35 Days</span>
+<span class="text-sm font-bold text-primary text-right">$2,450.00</span>
+</div>
+</div>
+</div>
+<!-- Timeline Insight -->
+<div class="bg-surface-container-lowest rounded-lg p-6">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary">timeline</span>
+<h3 class="font-headline font-bold text-lg text-primary">Timeline Variance</h3>
+</div>
+<div class="relative h-20 flex items-center px-2">
+<div class="absolute inset-x-2 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full w-[65%] bg-gradient-to-r from-secondary-fixed-dim to-secondary rounded-full"></div>
+</div>
+<div class="flex-1 flex flex-col items-center relative">
+<div class="w-3 h-3 rounded-full bg-primary mb-2 mt-[-6px]"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">Gate In</span>
+</div>
+<div class="flex-1 flex flex-col items-center relative">
+<div class="w-3 h-3 rounded-full bg-primary mb-2 mt-[-6px]"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">Port Load</span>
+</div>
+<div class="flex-1 flex flex-col items-center relative">
+<div class="w-4 h-4 rounded-full bg-secondary-fixed-dim border-2 border-white shadow-md mb-2 mt-[-8px]"></div>
+<span class="text-[10px] font-bold text-secondary">Transit (28d)</span>
+</div>
+<div class="flex-1 flex flex-col items-center relative">
+<div class="w-3 h-3 rounded-full bg-surface-container-high mb-2 mt-[-6px]"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">Destination</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Calculation Summary Card -->
+<section class="md:col-span-3 bg-primary-container rounded-lg p-8 text-white flex flex-col shadow-2xl shadow-primary-container/20">
+<div class="flex items-center gap-3 mb-10">
+<span class="material-symbols-outlined text-secondary-fixed-dim" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<h3 class="font-headline font-bold text-lg tracking-tight">Total Cost Analysis</h3>
+</div>
+<div class="space-y-6 flex-grow">
+<div class="flex justify-between items-end border-b border-white/10 pb-4">
+<span class="text-sm font-medium text-on-primary-container">Base Freight</span>
+<span class="text-xl font-headline font-bold">$37,200.00</span>
+</div>
+<div class="flex justify-between items-end border-b border-white/10 pb-4">
+<span class="text-sm font-medium text-on-primary-container">Bunker Adjustment (BAF)</span>
+<span class="text-xl font-headline font-bold">$1,840.00</span>
+</div>
+<div class="flex justify-between items-end border-b border-white/10 pb-4">
+<span class="text-sm font-medium text-on-primary-container">THC &amp; Documentation</span>
+<span class="text-xl font-headline font-bold">$950.00</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-sm font-medium text-secondary-fixed-dim">AI Savings Identified</span>
+<span class="text-xl font-headline font-bold text-secondary-fixed-dim">-$420.00</span>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-white/20">
+<p class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-primary-container mb-2 text-center">Estimated Grand Total</p>
+<div class="text-5xl font-headline font-extrabold text-center tracking-tighter mb-8">
+                        $39,570<span class="text-2xl text-on-primary-container font-medium">.00</span>
+</div>
+<button class="w-full py-4 bg-secondary text-white rounded-lg font-bold text-sm hover:bg-secondary-container hover:text-on-secondary-container transition-all active:scale-95">
+                        PROCEED TO BOOKING
+                    </button>
+<p class="text-[10px] text-center mt-4 text-white/40 leading-relaxed uppercase tracking-widest">Pricing accurate as of 23:45 UTC. Rates subject to dynamic shift.</p>
+</div>
+</section>
+</div>
+<!-- Secondary Analysis Row -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-container-low rounded-lg p-6 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-secondary text-3xl">co2</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-primary">Carbon Footprint Analysis</h4>
+<p class="text-sm text-on-surface-variant font-medium">Estimated 14.2 Tons CO2e for this route.</p>
+</div>
+</div>
+<button class="text-sm font-bold text-secondary hover:underline underline-offset-4">Offset Options</button>
+</div>
+<div class="bg-surface-container-low rounded-lg p-6 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<div class="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-secondary text-3xl">verified_user</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-primary">ClauseShield Protection</h4>
+<p class="text-sm text-on-surface-variant font-medium">Complimentary full liability cargo insurance included.</p>
+</div>
+</div>
+<button class="text-sm font-bold text-secondary hover:underline underline-offset-4">Policy Details</button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest text-on-surface-variant w-full py-12 px-8 border-t border-outline-variant/10">
+<div class="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-8 font-['Inter'] text-xs tracking-widest">
+<div class="flex flex-col gap-2">
+<span class="font-headline font-bold text-[#0B1F3A] text-lg tracking-tighter">ClauseShield</span>
+<p class="uppercase opacity-60">© 2024 ClauseShield Logistics Intelligence. All rights reserved.</p>
+</div>
+<div class="flex justify-center gap-8 uppercase font-bold">
+<a class="hover:text-primary transition-colors" href="#">Resources</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">API Docs</a>
+</div>
+<div class="flex justify-end gap-4">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center grayscale hover:grayscale-0 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-lg">database</span>
+</div>
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center grayscale hover:grayscale-0 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-lg">public</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- SideNavBar (Mobile Bottom Navigation) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white flex items-center justify-around z-50 border-t border-outline-variant/20">
+<button class="flex flex-col items-center gap-1 text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calculate</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Calculator</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Dashboard</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">location_on</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter">Tracking</span>
+</button>
+</nav>
+</body></html>

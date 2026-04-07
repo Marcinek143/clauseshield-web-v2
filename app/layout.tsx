@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Noto_Sans } from "next/font/google";
+import { Inter, Manrope, Noto_Sans } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "ClauseShield AI - Contract & Invoice Intelligence",
@@ -12,6 +13,13 @@ const inter = Inter({
   weight: ["400", "500", "600", "700", "900"],
   display: "swap",
   variable: "--font-inter",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-manrope",
 });
 
 const notoSans = Noto_Sans({
@@ -29,7 +37,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`light ${inter.variable} ${notoSans.variable}`}
+      className={`light ${inter.variable} ${manrope.variable} ${notoSans.variable}`}
     >
       <head>
         <link

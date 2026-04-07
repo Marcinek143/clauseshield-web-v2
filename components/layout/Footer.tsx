@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import FooterLinksColumn from "./FooterLinksColumn";
 
 const productLinks = [
@@ -38,12 +40,12 @@ export default function Footer() {
               financial reconciliation.
             </p>
             <div className="flex gap-4 mt-2">
-              <a className="text-slate-400 hover:text-primary transition-colors" href="#">
+              <Link className="text-slate-400 hover:text-primary transition-colors" href="#">
                 <span className="material-symbols-outlined">mail</span>
-              </a>
-              <a className="text-slate-400 hover:text-primary transition-colors" href="#">
+              </Link>
+              <Link className="text-slate-400 hover:text-primary transition-colors" href="#">
                 <span className="material-symbols-outlined">public</span>
-              </a>
+              </Link>
             </div>
           </div>
           <FooterLinksColumn title="Product" links={productLinks} />
@@ -55,15 +57,15 @@ export default function Footer() {
             © 2024 ClauseShield AI. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
+            <Link className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
               Privacy Policy
-            </a>
-            <a className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
+            </Link>
+            <Link className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
               Terms of Service
-            </a>
-            <a className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
+            </Link>
+            <Link className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" href="#">
               Cookie Settings
-            </a>
+            </Link>
           </div>
         </div>
       </div>

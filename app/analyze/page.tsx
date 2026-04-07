@@ -20,8 +20,9 @@
  */
 "use client";
 
+import ContractAiComingSoonPanel from "@/components/sections/ContractAiComingSoonPanel";
+import Link from "next/link";
 import { useState } from "react";
-import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 
 type AnalysisType = "contract" | "invoice";
@@ -36,6 +37,7 @@ const invoiceIssueOptions = [
 export const ANALYZE_FORM_SCHEMA_VERSION = "v1.0";
 
 export default function AnalyzePage() {
+  const isComingSoon = true;
   const [analysisType, setAnalysisType] = useState<AnalysisType>("contract");
   const [fullName, setFullName] = useState("");
   const [workEmail, setWorkEmail] = useState("");
@@ -66,7 +68,9 @@ export default function AnalyzePage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("SUBMIT FIRED");
+    if (isComingSoon) {
+      return;
+    }
     if (!isFormValid) {
       return;
     }
@@ -110,8 +114,11 @@ export default function AnalyzePage() {
 
   return (
     <div className="bg-background-light text-[#0d121b] font-display min-h-screen flex flex-col dark:bg-navy-900 dark:text-slate-100">
-      <Header />
       <main className="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <ContractAiComingSoonPanel
+          className="mb-10"
+          description="Advanced contract analysis and invoice processing are currently in development. This page is visible for preview only."
+        />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5 flex flex-col gap-10">
             <div className="flex flex-col gap-4">
@@ -125,10 +132,11 @@ export default function AnalyzePage() {
             </div>
             <div>
               <div className="inline-flex bg-[#e7ebf3]/60 p-1.5 rounded-xl dark:bg-navy-800/80">
-                <label className="cursor-pointer">
+                <label className={isComingSoon ? "cursor-not-allowed" : "cursor-pointer"}>
                   <input
                     checked={analysisType === "contract"}
                     className="peer sr-only"
+                    disabled={isComingSoon}
                     name="analysis_type"
                     type="radio"
                     value="contract"
@@ -141,10 +149,11 @@ export default function AnalyzePage() {
                     Contract Analysis
                   </span>
                 </label>
-                <label className="cursor-pointer">
+                <label className={isComingSoon ? "cursor-not-allowed" : "cursor-pointer"}>
                   <input
                     checked={analysisType === "invoice"}
                     className="peer sr-only"
+                    disabled={isComingSoon}
                     name="analysis_type"
                     type="radio"
                     value="invoice"
@@ -239,8 +248,30 @@ export default function AnalyzePage() {
                   Secure Connection
                 </span>
               </div>
-              <div className="p-8">
+              <div className="relative p-8">
+                <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/75 p-8 backdrop-blur-[2px] dark:bg-navy-900/75">
+                  <div className="max-w-md rounded-2xl border border-[#d9e0ea] bg-white px-6 py-6 text-center shadow-sm dark:border-navy-700 dark:bg-navy-800">
+                    <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-800 dark:bg-amber-500/15 dark:text-amber-300">
+                      Coming Soon
+                    </span>
+                    <h3 className="mt-4 text-2xl font-black tracking-tight text-[#0d121b] dark:text-slate-100">
+                      Available in 2026
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-[#4c639a] dark:text-slate-400">
+                      Contract AI analysis is still in development. Container
+                      Intelligence is available now for demurrage, detention,
+                      and tracking.
+                    </p>
+                    <Link
+                      className="mt-5 inline-flex h-11 items-center justify-center rounded-xl bg-[#1354ec] px-5 text-sm font-bold text-white shadow-md transition-colors hover:bg-blue-700"
+                      href="/container"
+                    >
+                      Explore Container Intelligence
+                    </Link>
+                  </div>
+                </div>
                 <form className="space-y-8" onSubmit={handleSubmit}>
+                  <fieldset className="space-y-8" disabled={isComingSoon}>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label
@@ -611,22 +642,22 @@ export default function AnalyzePage() {
                       <p className="text-[#4c639a] text-xs mt-0.5 dark:text-slate-400">
                         I acknowledge that I have the authority to upload this
                         document and agree to the{" "}
-                        <a className="text-[#1354ec] hover:underline dark:text-primary" href="#">
+                        <Link className="text-[#1354ec] hover:underline dark:text-primary" href="#">
                           Terms of Service
-                        </a>{" "}
+                        </Link>{" "}
                         &amp;{" "}
-                        <a className="text-[#1354ec] hover:underline dark:text-primary" href="#">
+                        <Link className="text-[#1354ec] hover:underline dark:text-primary" href="#">
                           Privacy Policy
-                        </a>
+                        </Link>
                         .
                       </p>
                     </div>
                   </div>
                   <div className="pt-2">
                     <button
-                      className="w-full flex items-center justify-center gap-2 bg-[#1354ec] hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-[0.99] dark:bg-primary dark:hover:bg-primary-hover"
+                      className="w-full flex items-center justify-center gap-2 bg-[#1354ec] hover:bg-blue-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-md hover:shadow-lg transition-all transform active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-primary dark:hover:bg-primary-hover"
                       type="submit"
-                      disabled={!isFormValid}
+                      disabled={isComingSoon || !isFormValid}
                     >
                       <span className="material-symbols-outlined text-[20px]">
                         analytics
@@ -638,6 +669,7 @@ export default function AnalyzePage() {
                       agreement.
                     </p>
                   </div>
+                  </fieldset>
                 </form>
               </div>
             </div>

@@ -97,7 +97,7 @@ export default async function CleanupPage({ searchParams }: CleanupPageProps) {
   return (
     <div className="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden font-display">
       {/* Dark mode header uses a deep navy surface with a faint divider glow. */}
-      <header className="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7ebf3] dark:border-navy-800/70 bg-background-light dark:bg-navy-900 px-6 py-3 shadow-sm dark:shadow-[0_1px_0_rgba(255,255,255,0.04)]">
+      <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7ebf3] dark:border-navy-800/70 bg-background-light dark:bg-navy-900 px-6 py-3 shadow-sm dark:shadow-[0_1px_0_rgba(255,255,255,0.04)]">
         <div className="flex items-center gap-4">
           <div className="flex items-center justify-center size-8 rounded-lg bg-primary/10 text-primary">
             <span className="material-symbols-outlined">shield</span>

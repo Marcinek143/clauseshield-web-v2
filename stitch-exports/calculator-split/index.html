@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ClauseShield | Cost Intelligence Calculator</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;500;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#00daf3",
+                    "surface-container-low": "#f2f4f6",
+                    "secondary-container": "#00e3fd",
+                    "inverse-primary": "#b5c7ea",
+                    "tertiary": "#000714",
+                    "on-primary-fixed-variant": "#364764",
+                    "primary-fixed": "#d6e3ff",
+                    "outline": "#75777e",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-fixed-dim": "#b7c8e1",
+                    "primary-fixed-dim": "#b5c7ea",
+                    "tertiary-fixed": "#d3e4fe",
+                    "surface-variant": "#e0e3e5",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#44474d",
+                    "tertiary-container": "#0f2033",
+                    "surface": "#f7f9fb",
+                    "surface-tint": "#4d5f7d",
+                    "surface-bright": "#f7f9fb",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed": "#071c36",
+                    "on-background": "#191c1e",
+                    "on-tertiary-container": "#7888a0",
+                    "background": "#f7f9fb",
+                    "secondary": "#006875",
+                    "primary": "#000615",
+                    "surface-dim": "#d8dadc",
+                    "on-secondary-container": "#00616d",
+                    "primary-container": "#0b1f3a",
+                    "outline-variant": "#c4c6ce",
+                    "inverse-surface": "#2d3133",
+                    "secondary-fixed": "#9cf0ff",
+                    "on-tertiary-fixed": "#0b1c30",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#001f24",
+                    "on-tertiary-fixed-variant": "#38485d",
+                    "on-primary-container": "#7587a7",
+                    "surface-container": "#eceef0",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-[#f7f9fb]/70 backdrop-blur-md shadow-xl shadow-[#000615]/5 flex justify-between items-center px-8 h-20 w-full max-w-full">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black text-[#0B1F3A] tracking-tighter">ClauseShield</span>
+<nav class="hidden md:flex items-center gap-6 font-['Manrope'] font-medium text-sm tracking-tight">
+<a class="text-[#006875] font-bold border-b-2 border-[#006875] pb-1" href="#">Calculator</a>
+<a class="text-[#44474d] hover:text-[#0B1F3A] transition-colors" href="#">Dashboard</a>
+<a class="text-[#44474d] hover:text-[#0B1F3A] transition-colors" href="#">Tracking</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-[#f2f4f6]/50 p-2 rounded-lg transition-all">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-[#f2f4f6]/50 p-2 rounded-lg transition-all">settings</button>
+<div class="h-8 w-[1px] bg-outline-variant/30 mx-2"></div>
+<button class="bg-primary-container text-on-primary px-6 py-2 rounded-lg font-headline font-bold text-sm hover:opacity-90 active:scale-95 transition-all">Upgrade</button>
+<img alt="User Profile" class="h-10 w-10 rounded-full border-2 border-white shadow-sm" data-alt="Professional portrait of a maritime logistics manager in a high-tech office setting with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu9WwVSQw8Vc4DBQuo0LT_1I62GWW43unbKn8CutnuUWhVz1KzbYe5OyEZvkSMdF2ZtX_X4yzf0M4MnnVrtFT10wV6sVNX6JmdkWR0uueqoee6PdFQE1To4o8Hvu5bcUmSgZjQWAwMiL_04xEUom2jShcDVYwwSGdNB4qLNnHpESLPa28PfFKlK0cNxsTwZQSVHclJdXmxSOrgXcQTlxeMduLuHyjrMpxy2BNKjBEMSU3-5C07cJPm-zSZfGKzpFYWzsIa4Bm7Q9E"/>
+</div>
+</header>
+<main class="pt-20 h-screen flex">
+<!-- Left Panel: Data Entry -->
+<section class="w-full md:w-[450px] lg:w-[500px] h-full bg-surface-container-low overflow-y-auto px-8 py-12 scrollbar-hide">
+<div class="max-w-md mx-auto">
+<div class="mb-10">
+<h1 class="font-headline font-extrabold text-3xl tracking-tight text-primary-container mb-2">Cost Intelligence</h1>
+<p class="text-on-surface-variant text-sm">Input container parameters to calculate live intelligent rates and risk assessments.</p>
+</div>
+<form class="space-y-8">
+<!-- Section: Origin & Destination -->
+<div class="space-y-4">
+<label class="font-headline font-bold text-xs uppercase tracking-widest text-on-surface-variant">Voyage Parameters</label>
+<div class="grid grid-cols-1 gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-secondary text-sm">location_on</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest rounded-xl border-none ring-1 ring-outline-variant/20 focus:ring-2 focus:ring-secondary/30 transition-all text-sm font-medium" placeholder="Origin Port (e.g., Shanghai)" type="text"/>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-3 text-secondary text-sm">location_on</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest rounded-xl border-none ring-1 ring-outline-variant/20 focus:ring-2 focus:ring-secondary/30 transition-all text-sm font-medium" placeholder="Destination Port (e.g., Rotterdam)" type="text"/>
+</div>
+</div>
+</div>
+<!-- Section: Container Specs -->
+<div class="space-y-4">
+<label class="font-headline font-bold text-xs uppercase tracking-widest text-on-surface-variant">Container Specification</label>
+<div class="grid grid-cols-2 gap-4">
+<select class="w-full px-4 py-3 bg-surface-container-lowest rounded-xl border-none ring-1 ring-outline-variant/20 focus:ring-2 focus:ring-secondary/30 transition-all text-sm font-medium appearance-none">
+<option>40' High Cube</option>
+<option>20' Standard</option>
+<option>40' Reefer</option>
+</select>
+<input class="w-full px-4 py-3 bg-surface-container-lowest rounded-xl border-none ring-1 ring-outline-variant/20 focus:ring-2 focus:ring-secondary/30 transition-all text-sm font-medium" placeholder="Quantity" type="number"/>
+</div>
+</div>
+<!-- Section: Financial Targets -->
+<div class="space-y-4">
+<label class="font-headline font-bold text-xs uppercase tracking-widest text-on-surface-variant">Base Rates &amp; Fees</label>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl ring-1 ring-outline-variant/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">payments</span>
+<span class="text-sm font-medium">Ocean Freight Base</span>
+</div>
+<input class="w-24 text-right bg-transparent border-none focus:ring-0 font-bold text-primary" type="text" value="$3,450"/>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl ring-1 ring-outline-variant/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary">local_shipping</span>
+<span class="text-sm font-medium">Estimated Drayage</span>
+</div>
+<input class="w-24 text-right bg-transparent border-none focus:ring-0 font-bold text-primary" type="text" value="$820"/>
+</div>
+</div>
+</div>
+<!-- Additional Toggles -->
+<div class="space-y-3 pt-4">
+<label class="flex items-center justify-between p-4 bg-primary/5 rounded-xl cursor-pointer group hover:bg-primary/10 transition-colors">
+<span class="text-sm font-semibold text-primary-container">Apply Smart-Clause Protection</span>
+<input checked="" class="rounded text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl cursor-pointer border border-outline-variant/10">
+<span class="text-sm font-medium text-on-surface-variant">Carbon Offset Protocol</span>
+<input class="rounded text-secondary focus:ring-secondary" type="checkbox"/>
+</label>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary rounded-xl font-headline font-extrabold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:-translate-y-0.5 transition-all">
+<span class="material-symbols-outlined">analytics</span>
+                        Recalculate Insight
+                    </button>
+</form>
+</div>
+</section>
+<!-- Right Panel: Live Insight Dashboard -->
+<section class="flex-1 h-full bg-surface overflow-y-auto px-10 py-12">
+<div class="max-w-5xl mx-auto space-y-10">
+<!-- Live Metric Header -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 p-8 bg-gradient-to-br from-primary to-primary-container rounded-[2rem] text-on-primary relative overflow-hidden group">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="px-3 py-1 rounded-full bg-secondary-container/20 text-secondary-fixed-dim text-[10px] font-bold uppercase tracking-widest">Live Total Projection</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-6xl font-headline font-extrabold tracking-tighter">$4,270.00</span>
+<span class="text-secondary-fixed-dim font-bold text-lg">+2.4%</span>
+</div>
+<p class="mt-4 text-on-primary-container text-sm leading-relaxed max-w-xs">AI-adjusted total including dynamic fuel surcharges and port congestion volatility.</p>
+</div>
+<!-- Abstract Graphic -->
+<div class="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-secondary/10 to-transparent flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity">
+<span class="material-symbols-outlined text-[160px]" style="font-variation-settings: 'FILL' 1;">insights</span>
+</div>
+</div>
+<div class="p-8 bg-surface-container-lowest rounded-[2rem] border border-outline-variant/10 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Confidence</span>
+<span class="text-secondary font-bold">94%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="w-[94%] h-full bg-secondary"></div>
+</div>
+</div>
+<div class="space-y-2">
+<span class="text-xs font-bold text-on-surface-variant">EST. ARRIVAL</span>
+<p class="text-xl font-headline font-bold text-primary-container">Oct 24, 2024</p>
+</div>
+</div>
+</div>
+<!-- Live Breakdown & Timeline -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Timeline Card -->
+<div class="p-8 bg-surface-container-lowest rounded-[2rem] shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline font-extrabold text-xl">Cost x Time Velocity</h3>
+<span class="material-symbols-outlined text-on-surface-variant">more_horiz</span>
+</div>
+<!-- Simple Visual Chart Component -->
+<div class="relative h-48 flex items-end justify-between gap-2 px-2">
+<div class="w-full bg-surface-container-low rounded-t-lg relative group h-[30%]">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-on-primary px-2 py-1 rounded text-[10px]">W1: $800</div>
+</div>
+<div class="w-full bg-surface-container-low rounded-t-lg relative group h-[45%]"></div>
+<div class="w-full bg-secondary/20 rounded-t-lg relative group h-[60%] border-t-2 border-secondary"></div>
+<div class="w-full bg-primary/20 rounded-t-lg relative group h-[85%] border-t-2 border-primary">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-2 py-1 rounded text-[10px]">Peak: $4.2k</div>
+</div>
+<div class="w-full bg-surface-container-low rounded-t-lg relative group h-[55%]"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">
+<span>Origin</span>
+<span>Mid-Transit</span>
+<span>Port</span>
+<span>Delivery</span>
+</div>
+</div>
+<!-- AI Insights Bento -->
+<div class="space-y-4">
+<div class="p-6 bg-secondary-fixed/30 rounded-3xl border border-secondary/10 relative overflow-hidden group">
+<div class="relative z-10 flex items-start gap-4">
+<div class="p-2 bg-secondary rounded-xl text-on-secondary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-bold text-primary-container">Congestion Alert</h4>
+<p class="text-sm text-on-surface-variant leading-snug">Shanghai Port experiencing 12% delay increase. Estimated impact: +$145 in detention risk.</p>
+</div>
+</div>
+</div>
+<div class="p-6 bg-surface-container-high rounded-3xl group cursor-pointer hover:bg-white transition-all duration-300">
+<div class="flex items-start gap-4">
+<div class="p-2 bg-primary-container rounded-xl text-on-primary">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<div>
+<h4 class="font-bold text-primary-container">ClauseShield Optimized</h4>
+<p class="text-sm text-on-surface-variant leading-snug">Smart-Clause has reduced premium by $240 by validating carrier performance history.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comparison Table -->
+<div class="p-8 bg-surface-container-lowest rounded-[2rem] overflow-hidden">
+<h3 class="font-headline font-extrabold text-xl mb-6">Competitive Intelligence</h3>
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest border-b border-outline-variant/10">
+<th class="pb-4">Market Index</th>
+<th class="pb-4">Base Rate</th>
+<th class="pb-4">Peak Factor</th>
+<th class="pb-4">Total</th>
+<th class="pb-4 text-right">Trend</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-outline-variant/10">
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5 font-bold">Global SCFI</td>
+<td class="py-5 text-on-surface-variant">$3,100</td>
+<td class="py-5 text-on-surface-variant">1.2x</td>
+<td class="py-5 font-bold">$3,720</td>
+<td class="py-5 text-right text-error font-bold">↑ 4.2%</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5 font-bold">ClauseShield Smart</td>
+<td class="py-5 text-on-surface-variant">$3,450</td>
+<td class="py-5 text-on-surface-variant">1.0x</td>
+<td class="py-5 font-bold text-secondary">$3,450</td>
+<td class="py-5 text-right text-secondary font-bold">↓ 0.8%</td>
+</tr>
+<tr class="group hover:bg-surface-container-low transition-colors">
+<td class="py-5 font-bold">Spot Market Avg</td>
+<td class="py-5 text-on-surface-variant">$3,800</td>
+<td class="py-5 text-on-surface-variant">1.5x</td>
+<td class="py-5 font-bold">$5,700</td>
+<td class="py-5 text-right text-on-surface-variant">—</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Navigation Shell Placeholder (Bottom Bar for Mobile) -->
+<div class="md:hidden fixed bottom-0 left-0 w-full bg-[#f7f9fb]/90 backdrop-blur-md px-6 py-4 flex justify-around items-center z-50 border-t border-outline-variant/10">
+<div class="flex flex-col items-center text-[#006875]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calculate</span>
+<span class="text-[10px] font-bold mt-1">Calc</span>
+</div>
+<div class="flex flex-col items-center text-[#44474d]">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium mt-1">Dash</span>
+</div>
+<div class="flex flex-col items-center text-[#44474d]">
+<span class="material-symbols-outlined">location_on</span>
+<span class="text-[10px] font-medium mt-1">Track</span>
+</div>
+</div>
+<!-- Footer Integrated into Right Panel Flow (simplified for layout) -->
+<footer class="hidden">
+<div class="bg-[#f7f9fb] w-full py-12 px-8 grid grid-cols-1 md:grid-cols-3 items-center gap-8 border-t border-[#44474d]/10">
+<span class="font-['Manrope'] font-bold text-[#0B1F3A]">ClauseShield</span>
+<p class="font-['Inter'] text-xs uppercase tracking-widest text-[#0B1F3A]">© 2024 ClauseShield Logistics Intelligence.</p>
+<div class="flex gap-4 justify-end">
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#44474d] hover:text-[#0B1F3A] underline underline-offset-4" href="#">Privacy</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#44474d] hover:text-[#0B1F3A] underline underline-offset-4" href="#">API Docs</a>
+</div>
+</div>
+</footer>
+</body></html>

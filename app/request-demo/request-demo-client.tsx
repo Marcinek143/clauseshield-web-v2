@@ -1,5 +1,7 @@
 "use client";
 
+import ContractAiComingSoonPanel from "@/components/sections/ContractAiComingSoonPanel";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -76,7 +78,9 @@ export default function RequestDemoClient() {
 
   return (
     <main className="flex-grow flex flex-col items-center justify-center py-10 md:py-20 px-4 md:px-8">
-      <div className="w-full max-w-[1200px] grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+      <div className="w-full max-w-[1200px] flex flex-col gap-10">
+        <ContractAiComingSoonPanel description="Demo requests will open when Contract AI launches. This feature is currently in development." />
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
         <div className="flex flex-col gap-8 lg:sticky lg:top-32 pt-4">
           <div className="inline-flex bg-white p-1 rounded-xl shadow-sm border border-[#e7ebf3] w-fit dark:bg-navy-800 dark:border-navy-700">
             {personaOptions.map((option) => (
@@ -158,7 +162,27 @@ export default function RequestDemoClient() {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#e7ebf3] p-6 md:p-8 lg:p-10 w-full max-w-[520px] mx-auto lg:mx-0 dark:bg-navy-800 dark:border-navy-700">
+        <div className="relative bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#e7ebf3] p-6 md:p-8 lg:p-10 w-full max-w-[520px] mx-auto lg:mx-0 dark:bg-navy-800 dark:border-navy-700">
+          <div className="absolute inset-0 z-10 flex items-center justify-center rounded-2xl bg-white/75 p-6 backdrop-blur-[2px] dark:bg-navy-900/75">
+            <div className="max-w-sm text-center">
+              <span className="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-800 dark:bg-amber-500/15 dark:text-amber-300">
+                Coming Soon
+              </span>
+              <h3 className="mt-4 text-2xl font-black tracking-tight text-[#0d121b] dark:text-slate-100">
+                Available in 2026
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#4c639a] dark:text-slate-400">
+                Demo requests will open when Contract AI launches. Explore the
+                live Container Intelligence product in the meantime.
+              </p>
+              <Link
+                className="mt-5 inline-flex h-11 items-center justify-center rounded-xl bg-[#1354ec] px-5 text-sm font-bold text-white shadow-md transition-colors hover:bg-[#0f42b8]"
+                href="/container"
+              >
+                Explore Container Intelligence
+              </Link>
+            </div>
+          </div>
           <div className="mb-8">
             <h3 className="text-[#0d121b] text-2xl font-bold tracking-tight mb-2 dark:text-slate-100">
               Schedule your personalized demo
@@ -169,6 +193,7 @@ export default function RequestDemoClient() {
             </p>
           </div>
           <form className="flex flex-col gap-5">
+            <fieldset className="flex flex-col gap-5" disabled>
             <input name="persona" type="hidden" value={persona} />
             <div className="space-y-1.5">
               <label
@@ -261,33 +286,36 @@ export default function RequestDemoClient() {
               ></textarea>
             </div>
             <button
-              className="mt-2 w-full h-12 bg-[#1354ec] hover:bg-[#0f42b8] text-white font-bold rounded-xl text-sm transition-colors shadow-md flex items-center justify-center gap-2 group"
+              className="mt-2 w-full h-12 bg-[#1354ec] text-white font-bold rounded-xl text-sm transition-colors shadow-md flex items-center justify-center gap-2 group disabled:cursor-not-allowed disabled:opacity-60"
               type="button"
+              disabled
             >
-              <span>{content.cta}</span>
+              <span>Demo requests open in 2026</span>
               <span className="material-symbols-outlined text-sm group-hover:translate-x-0.5 transition-transform">
                 arrow_forward
               </span>
             </button>
+            </fieldset>
             <p className="text-xs text-center text-[#9ca3af] mt-2 dark:text-slate-500">
               By submitting this form, you agree to our{" "}
-              <a
+              <Link
                 className="underline hover:text-[#1354ec] dark:hover:text-primary"
                 href="#"
               >
                 Terms of Service
-              </a>{" "}
+              </Link>{" "}
               and{" "}
-              <a
+              <Link
                 className="underline hover:text-[#1354ec] dark:hover:text-primary"
                 href="#"
               >
                 Privacy Policy
-              </a>
+              </Link>
               .
             </p>
           </form>
         </div>
+      </div>
       </div>
     </main>
   );
